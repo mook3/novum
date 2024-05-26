@@ -1,0 +1,136 @@
+meta:
+  engine: 4.1.0
+  version: 0.0.1
+  author: Henri Nurmi
+units:
+  kx: u
+  ky: u
+  px: kx + 2
+  py: ky + 2
+  index_stagger: -2.5
+points:
+  zones:
+    matrix:
+      columns:
+        outer:
+        pinky:
+        ring:
+          key.stagger: 9
+        middle:
+          key.stagger: 2.5
+        index:
+          key.stagger: index_stagger
+        inner:
+          key.stagger: -3.5
+      rows:
+        bottom:
+        home:
+        top:
+        num:
+    thumbs:
+      anchor:
+        ref: matrix_middle_bottom
+        shift: [0, -ky]
+      columns:
+        mod1:
+        mod2:
+          key.stagger: index_stagger
+        layer:
+          key:
+            shift: [1.1, -5]
+            rotate: -10
+        space:
+          key:
+            width: 1.5kx
+            rotate: 67
+            shift: [1, -14]
+      rows:
+        cluster:
+    encoder:
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [1.22kx, 0]
+      columns:
+        col:
+      rows:
+        row:
+outlines:
+  raw:
+    - what: rectangle
+      where: true
+      size: [px, py]
+  _keys_normal:
+    - what: rectangle
+      where: true
+      size: [kx-1, ky-1]
+  _keys_space:
+    - what: rectangle
+      where:
+        ref: thumbs_space_cluster
+      size: [1.5kx-1, ky-1]
+  keys:
+    - name: _keys_normal
+    - operation: stack
+      name: _keys_space
+  _top_arch_circle:
+    - what: circle
+      radius: 200
+      where:
+        ref: matrix_middle_bottom
+        shift: [0, -132.5]
+  _bottom_arch_circle:
+    - what: circle
+      radius: 300
+      where:
+        ref: matrix_middle_bottom
+        shift: [-70, -323]
+  _left_arch_circle:
+    - what: circle
+      radius: 300
+      where:
+        ref: matrix_middle_bottom
+        shift: [231, 16]
+  _right_arch_circle:
+    - what: circle
+      radius: 300
+      where:
+        ref: matrix_middle_bottom
+        shift: [-224, 20]
+  _right_arch_circle2:
+    - what: circle
+      radius: 300
+      where:
+        ref: matrix_middle_bottom
+        shift: [-200, 90]
+  _arches: [
+    +_top_arch_circle,
+    -_bottom_arch_circle,
+    ~_left_arch_circle,
+    ~_right_arch_circle,
+  ]
+  _switch_cutouts:
+    - what: rectangle
+      where: true
+      asym: source
+      size: 14
+      bound: false
+  _mcu_cutout:
+    - what: rectangle
+      size: [30, 60]
+      where:
+        ref: matrix_inner_home
+        shift: [0.5kx + 30/2 + 0.5, -0.5ky + 60/2 + 0.5]
+  board:
+    - what: outline
+      name: _arches
+      fillet: 3
+  switch_plate:
+    [ board, -_switch_cutouts, -_mcu_cutout]
+  _debug:
+    - name: board
+    - operation: stack
+      name: keys
+  debug:
+    - name: _debug
+    - operation: stack
+      name: _mcu_cutout

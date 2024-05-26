@@ -1,0 +1,21 @@
+{
+  "name": "novum",
+  "version": "1.0.0",
+  "description": "Novum Split Keyboard",
+  "scripts": {
+    "generate": "ergogen novum/ergogen/layout.yml -o out/novum"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henkru/novum.git"
+  },
+  "author": "Henri Nurmi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henkru/novum/issues"
+  },
+  "homepage": "https://github.com/henkru/novum#readme",
+  "dependencies": {
+    "ergogen": "^4.1.0"
+  }
+}
