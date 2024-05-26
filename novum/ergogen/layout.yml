@@ -102,12 +102,13 @@ outlines:
       where:
         ref: matrix_middle_bottom
         shift: [-200, 90]
-  _arches: [
-    +_top_arch_circle,
-    -_bottom_arch_circle,
-    ~_left_arch_circle,
-    ~_right_arch_circle,
-  ]
+  _arches:
+    [
+      +_top_arch_circle,
+      -_bottom_arch_circle,
+      ~_left_arch_circle,
+      ~_right_arch_circle,
+    ]
   _switch_cutouts:
     - what: rectangle
       where: true
@@ -134,3 +135,36 @@ outlines:
     - name: _debug
     - operation: stack
       name: _mcu_cutout
+pcbs:
+  plank:
+    outlines:
+      main:
+        outline: board
+    footprints:
+      switch:
+        what: mx
+        where: true
+        params:
+          from: "{{colrow}}"
+          to: "{{column_net}}"
+          hotswap: true
+          keycaps: true
+      diode:
+        what: diode
+        where: true
+        adjust:
+          rotate: 0
+          shift: [ 0, -4.5 ]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+          # via_in_pad: true
+          # through_hole: false
+      promicro:
+        what: promicro
+        where:
+          ref: matrix_inner_num
+          shift: [kx + 2, -13.5]
+          rotate: -90
+        params:
+          orientation: down
