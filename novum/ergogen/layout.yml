@@ -126,12 +126,19 @@ outlines:
       where:
         ref: matrix_middle_bottom
         shift: [arch_right_x, arch_right_y]
+  _conn_cut_left:
+    - what: rectangle
+      size: [13, 10]
+      where:
+        ref: matrix_inner_num
+        shift: [kx + 2, 10.7]
   _arches_left:
     [
       +_top_arch_circle_left,
       -_bottom_arch_circle_left,
       ~_left_arch_circle_left,
       ~_right_arch_circle_left,
+      -_conn_cut_left,
     ]
   # Outline arches for right side
   _top_arch_circle_right:
@@ -158,12 +165,19 @@ outlines:
       where:
         ref: matrix_middle_bottom
         shift: [mirror_distance - arch_right_x, arch_right_y]
+  _conn_cut_right:
+    - what: rectangle
+      size: [13, 10]
+      where:
+        ref: mirror_matrix_inner_num
+        shift: [kx + 2, 10.7]
   _arches_right:
     [
       +_top_arch_circle_right,
       -_bottom_arch_circle_right,
       ~_left_arch_circle_right,
       ~_right_arch_circle_right,
+      -_conn_cut_right,
     ]
   # Board outlines
   board_left:
@@ -200,6 +214,7 @@ outlines:
       name: board_right
 pcbs:
   left:
+    template: kicad8
     outlines:
       main:
         outline: board_left
@@ -270,6 +285,7 @@ pcbs:
           C: ''
           D: GND
   right:
+    template: kicad8
     outlines:
       main:
         outline: board_right
@@ -277,6 +293,8 @@ pcbs:
       switch:
         what: mx
         where: /^mirror_.*/
+        adjust:
+          rotate: 180
         params:
           from: "{{colrow}}"
           to: "{{column_net}}"
@@ -287,13 +305,22 @@ pcbs:
         where: /^mirror_.*/
         asym: source
         adjust:
-          rotate: 0
-          shift: [ 0, -4.5 ]
+          rotate: 180
+          shift: [ 0, 4.5 ]
         params:
           from: "{{colrow}}"
           to: "{{row_net}}"
-          # via_in_pad: true
-          # through_hole: false
+      encoder:
+        what: rotary
+        params:
+          from: ROW4
+          to: COL5
+          A: ENC1_A
+          B: ENC1_B
+          C: GND
+        where:
+          ref: mirror_encoder_col_row
+          rotate: -90
       promicro:
         what: promicro
         where:
@@ -302,3 +329,29 @@ pcbs:
           rotate: 90
         params:
           orientation: down
+          P20: GND # Right side indicator
+          P21: ROW0
+          P4:  ROW1
+          P14: ROW2
+          P16: ROW3
+          P10: ROW4
+          P15: COL0
+          P5:  COL1
+          P6:  COL2
+          P7:  COL3
+          P8:  COL4
+          P9:  COL5
+          P18: ENC1_A
+          P19: ENC1_B
+          P0:  DATA
+      trrs:
+        what: trrs
+        where:
+          ref: mirror_matrix_inner_num
+          shift: [kx + 17, mcu_shift_y - 21.4]
+          rotate: -90
+        params:
+          A: VCC
+          B: DATA
+          C: ''
+          D: GND
