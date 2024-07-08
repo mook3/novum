@@ -54,6 +54,9 @@ points:
         col:
       rows:
         row:
+  mirror: &mirror
+    ref: matrix_inner_num
+    distance: 5U
 outlines:
   raw:
     - what: rectangle
@@ -136,14 +139,14 @@ outlines:
     - operation: stack
       name: _mcu_cutout
 pcbs:
-  plank:
+  left:
     outlines:
       main:
         outline: board
     footprints:
       switch:
         what: mx
-        where: true
+        where: -/^mirror_.*/
         params:
           from: "{{colrow}}"
           to: "{{column_net}}"
@@ -151,7 +154,8 @@ pcbs:
           keycaps: true
       diode:
         what: diode
-        where: true
+        where: -/^mirror_.*/
+        asym: source
         adjust:
           rotate: 0
           shift: [ 0, -4.5 ]
