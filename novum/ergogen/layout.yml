@@ -7,61 +7,87 @@ units:
   ky: u
   px: kx + 2
   py: ky + 2
+  mirror_distance: 10U
   index_stagger: -2.5
+  arch_top_x: 0
+  arch_top_y: -132.5
+  arch_bottom_x: -70
+  arch_bottom_y: -323
+  arch_left_x: 231
+  arch_left_y: 16
+  arch_right_x: -224
+  arch_right_y: 20
+  mcu_shift_y: -13.5
 points:
   zones:
     matrix:
       columns:
         outer:
+          key.column_net: COL0
         pinky:
+          key.column_net: COL1
         ring:
           key.stagger: 9
+          key.column_net: COL2
         middle:
           key.stagger: 2.5
+          key.column_net: COL3
         index:
           key.stagger: index_stagger
+          key.column_net: COL4
         inner:
           key.stagger: -3.5
+          key.column_net: COL5
       rows:
         bottom:
+          row_net: ROW3
         home:
+          row_net: ROW2
         top:
+          row_net: ROW1
         num:
+          row_net: ROW0
+      # Fix placement on KiCAD sheet.
+      anchor:
+        shift: [50, -100]
     thumbs:
       anchor:
         ref: matrix_middle_bottom
         shift: [0, -ky]
       columns:
         mod1:
+          key.column_net: COL1
         mod2:
           key.stagger: index_stagger
+          key.column_net: COL2
         layer:
           key:
             shift: [1.1, -5]
             rotate: -10
+          key.column_net: COL3
         space:
           key:
             width: 1.5kx
             rotate: 67
             shift: [1, -14]
+          key.column_net: COL4
       rows:
         cluster:
+          row_net: ROW4
     encoder:
       anchor:
         ref: matrix_inner_bottom
         shift: [1.22kx, 0]
       columns:
         col:
+          key.column_net: COL5
       rows:
         row:
-  mirror: &mirror
-    ref: matrix_inner_num
-    distance: 5U
+          row_net: ROW4
+  mirror:
+    ref: matrix_middle_bottom
+    distance: mirror_distance
 outlines:
-  raw:
-    - what: rectangle
-      where: true
-      size: [px, py]
   _keys_normal:
     - what: rectangle
       where: true
@@ -75,43 +101,80 @@ outlines:
     - name: _keys_normal
     - operation: stack
       name: _keys_space
-  _top_arch_circle:
+  # Outline arches for left side
+  _top_arch_circle_left:
     - what: circle
       radius: 200
       where:
         ref: matrix_middle_bottom
-        shift: [0, -132.5]
-  _bottom_arch_circle:
+        shift: [arch_top_x, arch_top_y]
+  _bottom_arch_circle_left:
     - what: circle
       radius: 300
       where:
         ref: matrix_middle_bottom
-        shift: [-70, -323]
-  _left_arch_circle:
+        shift: [arch_bottom_x, arch_bottom_y]
+  _left_arch_circle_left:
     - what: circle
       radius: 300
       where:
         ref: matrix_middle_bottom
-        shift: [231, 16]
-  _right_arch_circle:
+        shift: [arch_left_x, arch_left_y]
+  _right_arch_circle_left:
     - what: circle
       radius: 300
       where:
         ref: matrix_middle_bottom
-        shift: [-224, 20]
-  _right_arch_circle2:
-    - what: circle
-      radius: 300
-      where:
-        ref: matrix_middle_bottom
-        shift: [-200, 90]
-  _arches:
+        shift: [arch_right_x, arch_right_y]
+  _arches_left:
     [
-      +_top_arch_circle,
-      -_bottom_arch_circle,
-      ~_left_arch_circle,
-      ~_right_arch_circle,
+      +_top_arch_circle_left,
+      -_bottom_arch_circle_left,
+      ~_left_arch_circle_left,
+      ~_right_arch_circle_left,
     ]
+  # Outline arches for right side
+  _top_arch_circle_right:
+    - what: circle
+      radius: 200
+      where:
+        ref: matrix_middle_bottom
+        shift: [mirror_distance - arch_top_x, arch_top_y]
+  _bottom_arch_circle_right:
+    - what: circle
+      radius: 300
+      where:
+        ref: matrix_middle_bottom
+        shift: [mirror_distance - arch_bottom_x, arch_bottom_y]
+  _left_arch_circle_right:
+    - what: circle
+      radius: 300
+      where:
+        ref: matrix_middle_bottom
+        shift: [mirror_distance - arch_left_x, arch_left_y]
+  _right_arch_circle_right:
+    - what: circle
+      radius: 300
+      where:
+        ref: matrix_middle_bottom
+        shift: [mirror_distance - arch_right_x, arch_right_y]
+  _arches_right:
+    [
+      +_top_arch_circle_right,
+      -_bottom_arch_circle_right,
+      ~_left_arch_circle_right,
+      ~_right_arch_circle_right,
+    ]
+  # Board outlines
+  board_left:
+    - what: outline
+      name: _arches_left
+      fillet: 3
+  board_right:
+    - what: outline
+      name: _arches_right
+      fillet: 3
+  # Switch plate
   _switch_cutouts:
     - what: rectangle
       where: true
@@ -124,29 +187,28 @@ outlines:
       where:
         ref: matrix_inner_home
         shift: [0.5kx + 30/2 + 0.5, -0.5ky + 60/2 + 0.5]
-  board:
-    - what: outline
-      name: _arches
-      fillet: 3
   switch_plate:
-    [ board, -_switch_cutouts, -_mcu_cutout]
+    [ board_left, -_switch_cutouts, -_mcu_cutout]
+  # Debug outlines
   _debug:
-    - name: board
+    - name: board_left
     - operation: stack
       name: keys
   debug:
     - name: _debug
     - operation: stack
-      name: _mcu_cutout
+      name: board_right
 pcbs:
   left:
     outlines:
       main:
-        outline: board
+        outline: board_left
     footprints:
       switch:
         what: mx
         where: -/^mirror_.*/
+        adjust:
+          rotate: 180
         params:
           from: "{{colrow}}"
           to: "{{column_net}}"
@@ -155,6 +217,74 @@ pcbs:
       diode:
         what: diode
         where: -/^mirror_.*/
+        asym: source
+        adjust:
+          rotate: 180
+          shift: [ 0, 4.5 ]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+      encoder:
+        what: rotary
+        params:
+          from: ROW4
+          to: COL5
+          A: ENC1_A
+          B: ENC1_B
+          C: GND
+        where:
+          ref: encoder_col_row
+          rotate: -90
+      promicro:
+        what: promicro
+        where:
+          ref: matrix_inner_num
+          shift: [kx + 2, mcu_shift_y]
+          rotate: -90
+        params:
+          orientation: down
+          P20: VCC # Left side indicator
+          P21: ROW0
+          P19: ROW1
+          P6:  ROW2
+          P7:  ROW3
+          P8:  ROW4
+          P9:  COL0
+          P18: COL1
+          P15: COL2
+          P14: COL3
+          P16: COL4
+          P10: COL5
+          P5:  ENC1_A
+          P4:  ENC1_B
+          P0:  DATA
+      trrs:
+        what: trrs
+        where:
+          ref: matrix_inner_num
+          shift: [kx + 17, mcu_shift_y - 26]
+          rotate: -90
+        params:
+          A: VCC
+          B: DATA
+          C: ''
+          D: GND
+  right:
+    outlines:
+      main:
+        outline: board_right
+    footprints:
+      switch:
+        what: mx
+        where: /^mirror_.*/
+        params:
+          from: "{{colrow}}"
+          to: "{{column_net}}"
+          hotswap: true
+          keycaps: true
+      diode:
+        what: diode
+        where: /^mirror_.*/
         asym: source
         adjust:
           rotate: 0
@@ -167,8 +297,8 @@ pcbs:
       promicro:
         what: promicro
         where:
-          ref: matrix_inner_num
-          shift: [kx + 2, -13.5]
-          rotate: -90
+          ref: mirror_matrix_inner_num
+          shift: [kx + 2, mcu_shift_y]
+          rotate: 90
         params:
           orientation: down
