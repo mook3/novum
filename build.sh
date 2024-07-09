@@ -18,7 +18,7 @@ else
     # Build the builder if does not exist
     if [ -z "$(docker images -q $IMAGE 2> /dev/null)" ]; then
         log_info "Building the builder container"
-        docker build -t $IMAGE builder
+        npm run build-builder
     fi
 fi
 
