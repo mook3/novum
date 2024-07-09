@@ -356,7 +356,7 @@ pcbs:
           keycaps: true
       diode:
         what: diode
-        where: [[/^mirror_.*/, switch]]
+        where: [[/^mirror_.*/, [switch, encoder]]]
         asym: source
         adjust:
           rotate: 180
