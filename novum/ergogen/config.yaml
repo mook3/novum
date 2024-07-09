@@ -87,27 +87,36 @@ points:
       rows:
         row:
           row_net: ROW4
-    mounting:
+    mounting_left:
       key:
         tags: mount
-        padding: 7/4ky
-        spread: 4kx
+        padding: 2ky
       anchor:
         ref: matrix_outer_bottom
-        shift: [kx/2, -ky/4]
+        shift: [kx/2, ky/2]
       columns:
         c1:
-        c2:
       rows:
         r1:
         r2:
-        r3:
+    mounting_right:
+      key:
+        tags: mount
+        padding: 3ky + 1
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-kx/2 + 1, -ky/2 - 1]
+      columns:
+        c1:
+      rows:
+        r1:
+        r2:
     mounting_thumb:
       key:
         tags: mount
       anchor:
-        ref: encoder_col_row
-        shift: [0, -0.6ky]
+        ref: thumbs_space_cluster
+        shift: [kx/2 + 2, ky/2 - 2]
       columns:
         c1:
       rows:
@@ -166,7 +175,6 @@ outlines:
       -_bottom_arch_circle_left,
       ~_left_arch_circle_left,
       ~_right_arch_circle_left,
-      -_conn_cut_left,
     ]
   # Outline arches for right side
   _top_arch_circle_right:
@@ -205,7 +213,6 @@ outlines:
       -_bottom_arch_circle_right,
       ~_left_arch_circle_right,
       ~_right_arch_circle_right,
-      -_conn_cut_right,
     ]
   # Mounting holes
   _mounting_holes:
@@ -213,14 +220,22 @@ outlines:
       radius: 1.1
       where: mount
   # Board outlines
-  board_left:
+  board_outline_left:
     - what: outline
       name: _arches_left
       fillet: 3
-  board_right:
+  board_outline_right:
     - what: outline
       name: _arches_right
       fillet: 3
+  board_left:
+    [ board_outline_left, -_mounting_holes]
+  board_right:
+    [ board_outline_right, -_mounting_holes]
+  board_pcb_left:
+    [ board_outline_left, -_conn_cut_left]
+  board_pcb_right:
+    [ board_outline_right, -_conn_cut_right]
   # Switch plate
   _switch_cutouts:
     - what: rectangle
@@ -235,14 +250,16 @@ outlines:
         ref: matrix_inner_home
         shift: [0.5kx + 30/2 + 0.5, -0.5ky + 60/2 + 0.5]
   switch_plate:
-    [ board_left, -_switch_cutouts, -_mcu_cutout, -_mounting_holes]
+    [board_outline_left, -_switch_cutouts, -_mcu_cutout]
+  switch_plate_with_mouting:
+    [switch_plate, -_mounting_holes]
   # Debug outlines
   _debug:
     - name: keys
     - operation: stack
       name: keys
   debug:
-    - name: switch_plate
+    - name: _mounting_holes
     - operation: stack
       name: _debug
 pcbs:
@@ -250,11 +267,11 @@ pcbs:
     template: kicad8
     outlines:
       main:
-        outline: board_left
+        outline: board_pcb_left
     footprints:
       switch:
         what: mx
-        where: -/^mirror_.*/
+        where: [[-/^mirror_.*/, switch]]
         adjust:
           rotate: 180
         params:
@@ -264,7 +281,7 @@ pcbs:
           keycaps: true
       diode:
         what: diode
-        where: -/^mirror_.*/
+        where: [[-/^mirror_.*/, switch]]
         asym: source
         adjust:
           rotate: 180
@@ -317,15 +334,19 @@ pcbs:
           B: DATA
           C: ''
           D: GND
+      mounting:
+        what: mounting_hole_plated
+        where: [[-/^mirror_.*/, mount]]
+        params.drill: 3.1
   right:
     template: kicad8
     outlines:
       main:
-        outline: board_right
+        outline: board_pcb_right
     footprints:
       switch:
         what: mx
-        where: /^mirror_.*/
+        where: [[/^mirror_.*/, switch]]
         adjust:
           rotate: 180
         params:
@@ -335,7 +356,7 @@ pcbs:
           keycaps: true
       diode:
         what: diode
-        where: /^mirror_.*/
+        where: [[/^mirror_.*/, switch]]
         asym: source
         adjust:
           rotate: 180
@@ -388,3 +409,17 @@ pcbs:
           B: DATA
           C: ''
           D: GND
+      mounting:
+        what: mounting_hole_plated
+        where: [[/^mirror_.*/, mount]]
+        params.drill: 3.1
+  switch_plate:
+    template: kicad8
+    outlines:
+      main:
+        outline: switch_plate
+    footprints:
+      mounting:
+        what: mounting_hole_plated
+        where: [[-/^mirror_.*/, mount]]
+        params.drill: 2.2
