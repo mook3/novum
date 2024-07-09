@@ -423,3 +423,8 @@ pcbs:
         what: mounting_hole_plated
         where: [[-/^mirror_.*/, mount]]
         params.drill: 2.2
+  bottom_board:
+    template: kicad8
+    outlines:
+      main:
+        outline: board_left
