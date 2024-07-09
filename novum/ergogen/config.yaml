@@ -127,7 +127,7 @@ points:
 outlines:
   _keys_normal:
     - what: rectangle
-      where: switch
+      where: [switch, encoder]
       size: [kx-1, ky-1]
   _keys_space:
     - what: rectangle
@@ -239,7 +239,7 @@ outlines:
   # Switch plate
   _switch_cutouts:
     - what: rectangle
-      where: switch
+      where: [switch, encoder]
       asym: source
       size: 14
       bound: false
