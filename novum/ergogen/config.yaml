@@ -21,6 +21,7 @@ units:
 points:
   zones:
     matrix:
+      key.tags: switch
       columns:
         outer:
           key.column_net: COL0
@@ -51,6 +52,7 @@ points:
       anchor:
         shift: [50, -100]
     thumbs:
+      key.tags: switch
       anchor:
         ref: matrix_middle_bottom
         shift: [0, -ky]
@@ -75,6 +77,7 @@ points:
         cluster:
           row_net: ROW4
     encoder:
+      key.tags: switch
       anchor:
         ref: matrix_inner_bottom
         shift: [1.22kx, 0]
@@ -84,13 +87,38 @@ points:
       rows:
         row:
           row_net: ROW4
+    mounting:
+      key:
+        tags: mount
+        padding: 7/4ky
+        spread: 4kx
+      anchor:
+        ref: matrix_outer_bottom
+        shift: [kx/2, -ky/4]
+      columns:
+        c1:
+        c2:
+      rows:
+        r1:
+        r2:
+        r3:
+    mounting_thumb:
+      key:
+        tags: mount
+      anchor:
+        ref: encoder_col_row
+        shift: [0, -0.6ky]
+      columns:
+        c1:
+      rows:
+        r1:
   mirror:
     ref: matrix_middle_bottom
     distance: mirror_distance
 outlines:
   _keys_normal:
     - what: rectangle
-      where: true
+      where: switch
       size: [kx-1, ky-1]
   _keys_space:
     - what: rectangle
@@ -179,6 +207,11 @@ outlines:
       ~_right_arch_circle_right,
       -_conn_cut_right,
     ]
+  # Mounting holes
+  _mounting_holes:
+    - what: circle
+      radius: 1.1
+      where: mount
   # Board outlines
   board_left:
     - what: outline
@@ -191,7 +224,7 @@ outlines:
   # Switch plate
   _switch_cutouts:
     - what: rectangle
-      where: true
+      where: switch
       asym: source
       size: 14
       bound: false
@@ -202,16 +235,16 @@ outlines:
         ref: matrix_inner_home
         shift: [0.5kx + 30/2 + 0.5, -0.5ky + 60/2 + 0.5]
   switch_plate:
-    [ board_left, -_switch_cutouts, -_mcu_cutout]
+    [ board_left, -_switch_cutouts, -_mcu_cutout, -_mounting_holes]
   # Debug outlines
   _debug:
-    - name: board_left
+    - name: keys
     - operation: stack
       name: keys
   debug:
-    - name: _debug
+    - name: switch_plate
     - operation: stack
-      name: board_right
+      name: _debug
 pcbs:
   left:
     template: kicad8

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Novum Split Keyboard",
   "scripts": {
-    "generate": "ergogen novum/ergogen/layout.yml -o out/novum"
+    "generate": "ergogen novum/ergogen -o out/novum"
   },
   "repository": {
     "type": "git",
