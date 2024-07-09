@@ -50,7 +50,7 @@ module.exports = {
     const courtyard_y = size_y / 2 + courtyard_offset;
 
     const top = `
-  (footprint "ceoloide:mounting_hole_plated"
+  (footprint "mounting_hole_plated"
     (layer "${p.side}.Cu")
     ${p.at}
     (property "Reference" "${p.ref}"
