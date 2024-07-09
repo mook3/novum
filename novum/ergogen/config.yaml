@@ -77,7 +77,7 @@ points:
         cluster:
           row_net: ROW4
     encoder:
-      key.tags: switch
+      key.tags: encoder
       anchor:
         ref: matrix_inner_bottom
         shift: [1.22kx, 0]
@@ -281,7 +281,7 @@ pcbs:
           keycaps: true
       diode:
         what: diode
-        where: [[-/^mirror_.*/, switch]]
+        where: [[-/^mirror_.*/, [switch, encoder]]]
         asym: source
         adjust:
           rotate: 180
