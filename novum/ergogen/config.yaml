@@ -301,7 +301,7 @@ pcbs:
           ref: encoder_col_row
           rotate: -90
       promicro:
-        what: promicro
+        what: promicro_custom
         where:
           ref: matrix_inner_num
           shift: [kx + 2, mcu_shift_y]
@@ -376,7 +376,7 @@ pcbs:
           ref: mirror_encoder_col_row
           rotate: -90
       promicro:
-        what: promicro
+        what: promicro_custom
         where:
           ref: mirror_matrix_inner_num
           shift: [kx + 2, mcu_shift_y]
