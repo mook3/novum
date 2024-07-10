@@ -17,7 +17,13 @@ units:
   arch_left_y: 16
   arch_right_x: -224
   arch_right_y: 20
+  mcu_shift_x: kx + 2
   mcu_shift_y: -13.5
+  conn_cut_width: 18
+  trrs_shift_x: kx + 17
+  trrs_shift_y: mcu_shift_y - 22.5
+  reset_shift_x: kx + 13.6
+  reset_shfit_y: trrs_shift_y - 6.5
 points:
   zones:
     matrix:
@@ -165,7 +171,7 @@ outlines:
         shift: [arch_right_x, arch_right_y]
   _conn_cut_left:
     - what: rectangle
-      size: [13, 10]
+      size: [conn_cut_width, 10]
       where:
         ref: matrix_inner_num
         shift: [kx + 2, 10.7]
@@ -203,7 +209,7 @@ outlines:
         shift: [mirror_distance - arch_right_x, arch_right_y]
   _conn_cut_right:
     - what: rectangle
-      size: [13, 10]
+      size: [conn_cut_width, 10]
       where:
         ref: mirror_matrix_inner_num
         shift: [kx + 2, 10.7]
@@ -304,7 +310,7 @@ pcbs:
         what: promicro_custom
         where:
           ref: matrix_inner_num
-          shift: [kx + 2, mcu_shift_y]
+          shift: [mcu_shift_x, mcu_shift_y]
           rotate: -90
         params:
           orientation: down
@@ -327,13 +333,19 @@ pcbs:
         what: trrs
         where:
           ref: matrix_inner_num
-          shift: [kx + 17, mcu_shift_y - 26]
+          shift: [trrs_shift_x, trrs_shift_y]
           rotate: -90
         params:
           A: VCC
           B: DATA
           C: ''
           D: GND
+      reset:
+        what: reset_button
+        where:
+          ref: matrix_inner_num
+          shift: [reset_shift_x, reset_shfit_y]
+          rotate: -90
       mounting:
         what: mounting_hole_plated
         where: [[-/^mirror_.*/, mount]]
@@ -379,7 +391,7 @@ pcbs:
         what: promicro_custom
         where:
           ref: mirror_matrix_inner_num
-          shift: [kx + 2, mcu_shift_y]
+          shift: [mcu_shift_x, mcu_shift_y]
           rotate: 90
         params:
           orientation: down
@@ -402,13 +414,19 @@ pcbs:
         what: trrs
         where:
           ref: mirror_matrix_inner_num
-          shift: [kx + 17, mcu_shift_y - 21.4]
+          shift: [trrs_shift_x, trrs_shift_y + 4.6]
           rotate: -90
         params:
           A: VCC
           B: DATA
           C: ''
           D: GND
+      reset:
+        what: reset_button
+        where:
+          ref: mirror_matrix_inner_num
+          shift: [reset_shift_x, reset_shfit_y]
+          rotate: -90
       mounting:
         what: mounting_hole_plated
         where: [[/^mirror_.*/, mount]]
