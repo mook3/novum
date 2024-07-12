@@ -46,16 +46,22 @@ cp kicad/JLCPCB.kicad_dru "out/$BOARD/pcbs/left.kicad_dru"
 cp kicad/JLCPCB.kicad_dru "out/$BOARD/pcbs/right.kicad_dru"
 cp kicad/JLCPCB.kicad_dru "out/$BOARD/pcbs/switch_plate.kicad_dru"
 cp kicad/JLCPCB.kicad_dru "out/$BOARD/pcbs/bottom_board.kicad_dru"
-$DOCKER_CMD kibot -b out/novum/pcbs/left.kicad_pcb -c novum/kibot/nop.yml
-$DOCKER_CMD kibot -b out/novum/pcbs/right.kicad_pcb -c novum/kibot/nop.yml
-$DOCKER_CMD kibot -b out/novum/pcbs/switch_plate.kicad_pcb -c novum/kibot/nop.yml
-$DOCKER_CMD kibot -b out/novum/pcbs/bottom_board.kicad_pcb -c novum/kibot/nop.yml
-jq '.net_settings.classes[0].clearance |= 0.5' "out/$BOARD/pcbs/left.kicad_pro" > "out/$BOARD/pcbs/left.tmp" && mv "out/$BOARD/pcbs/left.tmp" "out/$BOARD/pcbs/left.kicad_pro"
-jq '.net_settings.classes[0].track_witdh |= 0.3' "out/$BOARD/pcbs/left.kicad_pro" > "out/$BOARD/pcbs/left.tmp" && mv "out/$BOARD/pcbs/left.tmp" "out/$BOARD/pcbs/left.kicad_pro"
-jq '.net_settings.classes[0].clearance |= 0.5' "out/$BOARD/pcbs/right.kicad_pro" > "out/$BOARD/pcbs/right.tmp" && mv "out/$BOARD/pcbs/right.tmp" "out/$BOARD/pcbs/right.kicad_pro"
-jq '.net_settings.classes[0].track_width |= 0.3' "out/$BOARD/pcbs/right.kicad_pro" > "out/$BOARD/pcbs/right.tmp" && mv "out/$BOARD/pcbs/right.tmp" "out/$BOARD/pcbs/right.kicad_pro"
+$DOCKER_CMD ./kicad/add_rules.py out/novum/pcbs/left.kicad_pcb
+$DOCKER_CMD ./kicad/add_rules.py out/novum/pcbs/right.kicad_pcb
+$DOCKER_CMD ./kicad/add_rules.py out/novum/pcbs/switch_plate.kicad_pcb
+$DOCKER_CMD ./kicad/add_rules.py out/novum/pcbs/bottom_board.kicad_pcb
 
-# Step 2: Autoroute the PCB
+# Step 3: Add hand-created tracks (if any)
+if [ -f "$BOARD/kicad/left.json" ]; then
+    log_info "Adding hand-created tracks to the left side"
+    $DOCKER_CMD ./kicad/import_tracks.py "out/$BOARD/pcbs/left.kicad_pcb" "$BOARD/kicad/left.json"
+fi
+if [ -f "$BOARD/kicad/right.json" ]; then
+    log_info "Adding hand-created tracks to the right side"
+    $DOCKER_CMD ./kicad/import_tracks.py "out/$BOARD/pcbs/right.kicad_pcb" "$BOARD/kicad/right.json"
+fi
+
+# Step 4: Autoroute the PCB
 mkdir -p "out/$BOARD/freeroute"
 
 log_info "Exporting the DSN files..."
@@ -72,7 +78,7 @@ log_info "Importing the SES files..."
 $DOCKER_CMD ./kicad/import_ses.py -b "out/$BOARD/pcbs/left.kicad_pcb" -s "out/$BOARD/freeroute/left.ses" -o "out/$BOARD/pcbs/left.kicad_pcb"
 $DOCKER_CMD ./kicad/import_ses.py -b "out/$BOARD/pcbs/right.kicad_pcb" -s "out/$BOARD/freeroute/right.ses" -o "out/$BOARD/pcbs/right.kicad_pcb"
 
-# Step 4: Generate gerbers and images
+# Step 5: Generate gerbers and images
 log_info "Generating gerbers and images..."
 $DOCKER_CMD kibot -b out/novum/pcbs/left.kicad_pcb -c novum/kibot/board.yml
 $DOCKER_CMD kibot -b out/novum/pcbs/right.kicad_pcb -c novum/kibot/board.yml

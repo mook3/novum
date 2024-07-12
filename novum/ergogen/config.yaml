@@ -346,6 +346,26 @@ pcbs:
           ref: matrix_inner_num
           shift: [reset_shift_x, reset_shfit_y]
           rotate: -90
+      zone_front:
+        what: zone
+        where:
+          ref: matrix_outer_num
+          shift: [-1kx, 1.2ky]
+        params:
+          net: VCC
+          side: F
+          width: 8.5kx
+          height: 6.5ky
+      zone_back:
+        what: zone
+        where:
+          ref: matrix_outer_num
+          shift: [-1kx, 1.2ky]
+        params:
+          net: GND
+          side: B
+          width: 8.5kx
+          height: 6.5ky
       mounting:
         what: mounting_hole_plated
         where: [[-/^mirror_.*/, mount]]
@@ -427,6 +447,26 @@ pcbs:
           ref: mirror_matrix_inner_num
           shift: [reset_shift_x, reset_shfit_y]
           rotate: -90
+      zone_front:
+        what: zone
+        where:
+          ref: mirror_matrix_outer_num
+          shift: [-1kx, 1.2ky]
+        params:
+          net: VCC
+          side: F
+          width: -8.5kx
+          height: 6.5ky
+      zone_back:
+        what: zone
+        where:
+          ref: mirror_matrix_outer_num
+          shift: [-1kx, 1.2ky]
+        params:
+          net: GND
+          side: B
+          width: -8.5kx
+          height: 6.5ky
       mounting:
         what: mounting_hole_plated
         where: [[/^mirror_.*/, mount]]

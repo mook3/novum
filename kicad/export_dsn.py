@@ -26,6 +26,11 @@ def main(argv):
             output_file = arg
     print('Exporting Specctra DSN for ', board_file, ' at ', output_file)
     board = pcbnew.LoadBoard(board_file)
+
+    # Remove zones, freerouting doesn't like them
+    for zone in board.Zones():
+        board.Remove(zone)
+
     pcbnew.ExportSpecctraDSN(board, output_file)
 
 
