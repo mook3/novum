@@ -70,7 +70,7 @@ outputs:
     dir: out/novum/images
     options:
       format: png
-      style: oshpark-afterdark
+      style: set-black-enig.json
       margin: 5
       show_solderpaste: false
 

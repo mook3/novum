@@ -1,8 +1,7 @@
 module.exports = {
-  nets: {
-  },
   params: {
-    class: "B", // for Button
+    designator: 'B',
+    class: "B",
     side: "F",
     from: { type: 'net', value: 'RST' },
     to: { type: 'net', value: 'GND' },
