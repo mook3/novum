@@ -13,7 +13,7 @@ units:
   arch_top_y: -132.5
   arch_bottom_x: -70
   arch_bottom_y: -323
-  arch_left_x: 231
+  arch_left_x: 230.5
   arch_left_y: 16
   arch_right_x: -224
   arch_right_y: 20
@@ -261,7 +261,7 @@ outlines:
     [switch_plate, -_mounting_holes]
   # Debug outlines
   _debug:
-    - name: keys
+    - name: board_left
     - operation: stack
       name: keys
   debug:
