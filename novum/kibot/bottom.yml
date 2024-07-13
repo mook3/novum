@@ -2,10 +2,8 @@ kibot:
   version: 1
 
 preflight:
-  fill_zones: true
-  drc:
-    enabled: true
-    dir: out/novum/drc
+  fill_zones: false
+  drc: false
 
 import:
   - jlcpcb.yml

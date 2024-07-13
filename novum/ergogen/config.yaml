@@ -377,11 +377,11 @@ pcbs:
           shift: [mcu_shift_x, mcu_shift_y]
         params:
           text: "Left\\nUp"
-      text_commit:
-        what: commit
+      text_version:
+        what: version
         where:
           ref: matrix_inner_num
-          shift: [mcu_shift_x, mcu_shift_y + 16]
+          shift: [mcu_shift_x, mcu_shift_y + 16.5]
   right:
     template: kicad8
     outlines:
@@ -490,11 +490,11 @@ pcbs:
           shift: [mcu_shift_x, mcu_shift_y]
         params:
           text: "Right\\nUp"
-      text_commit:
-        what: commit
+      text_version:
+        what: version
         where:
           ref: mirror_matrix_inner_num
-          shift: [mcu_shift_x, mcu_shift_y + 16]
+          shift: [mcu_shift_x, mcu_shift_y + 16.5]
   switch_plate:
     template: kicad8
     outlines:

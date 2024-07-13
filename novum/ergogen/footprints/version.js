@@ -67,13 +67,8 @@ module.exports = {
     face: '',
   },
   body: p => {
-    // The require() function is 'sandboxed', so we need another approach
-    const cp = process.mainModule.require('child_process');
-
-    const gitHash = cp.execSync('git rev-parse --short HEAD').toString().trim();
-    const gitBranch = cp.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-    const gitTag = cp.execSync('git tag --points-at HEAD').toString().trim();
-    const text = 'Novum ' + (gitTag === '' ? `${gitBranch}-${gitHash}` : gitTag);
+    const version = process.env.NOVUM_VERSION === undefined ? '' : process.env.NOVUM_VERSION;
+    const text = `Novum ${version}`;
 
     const generate_text = (side, layer, align, mirrored, thickness, height, width, text, face, bold, italic, knockout) => {
       let justify = `(justify ${align} ${mirrored ? 'mirror' : ''})`;

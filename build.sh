@@ -8,13 +8,11 @@ log_info() {
     echo "${BLUE}${TIMESTAMP}${NC}: ${BOLD}$1${NC}"
 }
 
-BOARD=novum
-
 if [ -f /.dockerenv ]; then
-    DOCKER_CMD=""
+    export DOCKER_CMD=""
 else
     IMAGE=henkru/ergo-builder:latest
-    DOCKER_CMD="docker run --rm -it --platform linux/amd64 -v $PWD:/kicad-project $IMAGE"
+    export DOCKER_CMD="docker run --rm -it --platform linux/amd64 -v $PWD:/kicad-project $IMAGE"
     # Build the builder if does not exist
     if [ -z "$(docker images -q $IMAGE 2> /dev/null)" ]; then
         log_info "Building the builder container"
@@ -22,68 +20,25 @@ else
     fi
 fi
 
-# Step 0: Remove the old build, and install requirements
-log_info "Installing dependencies..."
 if [ ! -f "freerouting.jar" ]; then
     log_info "'freerouting.jar' does not exist. Downloading..."
     wget -O freerouting.jar https://github.com/freerouting/freerouting/releases/download/v1.9.0/freerouting-1.9.0.jar
 fi
 
-npm install
+export FREEROUTING_PATH="./freerouting.jar"
+
+log_info "Starts building"
 
 if [ -d "out" ]; then
     log_info "Removing the 'out' directory..."
     rm -r "out"
 fi
 
-# Step 1: Run ergogen to generate PCBs and outlines
-log_info "Generating the PCBs..."
-npm run generate
-
-# Step 2: Inject desing rules
-log_info "Adding JLCPCB design rules"
-cp kicad/JLCPCB.kicad_dru "out/$BOARD/pcbs/left.kicad_dru"
-cp kicad/JLCPCB.kicad_dru "out/$BOARD/pcbs/right.kicad_dru"
-cp kicad/JLCPCB.kicad_dru "out/$BOARD/pcbs/switch_plate.kicad_dru"
-cp kicad/JLCPCB.kicad_dru "out/$BOARD/pcbs/bottom_board.kicad_dru"
-$DOCKER_CMD ./kicad/add_rules.py out/novum/pcbs/left.kicad_pcb
-$DOCKER_CMD ./kicad/add_rules.py out/novum/pcbs/right.kicad_pcb
-$DOCKER_CMD ./kicad/add_rules.py out/novum/pcbs/switch_plate.kicad_pcb
-$DOCKER_CMD ./kicad/add_rules.py out/novum/pcbs/bottom_board.kicad_pcb
-
-# Step 3: Add hand-created tracks (if any)
-if [ -f "$BOARD/kicad/left.json" ]; then
-    log_info "Adding hand-created tracks to the left side"
-    $DOCKER_CMD ./kicad/import_tracks.py "out/$BOARD/pcbs/left.kicad_pcb" "$BOARD/kicad/left.json"
-fi
-if [ -f "$BOARD/kicad/right.json" ]; then
-    log_info "Adding hand-created tracks to the right side"
-    $DOCKER_CMD ./kicad/import_tracks.py "out/$BOARD/pcbs/right.kicad_pcb" "$BOARD/kicad/right.json"
-fi
-
-# Step 4: Autoroute the PCB
-mkdir -p "out/$BOARD/freeroute"
-
-log_info "Exporting the DSN files..."
-$DOCKER_CMD ./kicad/export_dsn.py -b "out/$BOARD/pcbs/left.kicad_pcb" -o "out/$BOARD/freeroute/left.dsn"
-$DOCKER_CMD ./kicad/export_dsn.py -b "out/$BOARD/pcbs/right.kicad_pcb" -o "out/$BOARD/freeroute/right.dsn"
-
-log_info "Routing the left side..."
-java -jar freerouting.jar -da -dct 0 -de "out/$BOARD/freeroute/left.dsn" -do "out/$BOARD/freeroute/left.ses"
-
-log_info "Routing the right side..."
-java -jar freerouting.jar -da -dct 0 -de "out/$BOARD/freeroute/right.dsn" -do "out/$BOARD/freeroute/right.ses"
-
-log_info "Importing the SES files..."
-$DOCKER_CMD ./kicad/import_ses.py -b "out/$BOARD/pcbs/left.kicad_pcb" -s "out/$BOARD/freeroute/left.ses" -o "out/$BOARD/pcbs/left.kicad_pcb"
-$DOCKER_CMD ./kicad/import_ses.py -b "out/$BOARD/pcbs/right.kicad_pcb" -s "out/$BOARD/freeroute/right.ses" -o "out/$BOARD/pcbs/right.kicad_pcb"
-
-# Step 5: Generate gerbers and images
-log_info "Generating gerbers and images..."
-$DOCKER_CMD kibot -b out/novum/pcbs/left.kicad_pcb -c novum/kibot/board.yml
-$DOCKER_CMD kibot -b out/novum/pcbs/right.kicad_pcb -c novum/kibot/board.yml
-$DOCKER_CMD kibot -b out/novum/pcbs/switch_plate.kicad_pcb -c novum/kibot/board.yml
-$DOCKER_CMD kibot -b out/novum/pcbs/bottom_board.kicad_pcb -c novum/kibot/board.yml
+./builder/steps/generate.sh
+./builder/steps/add_design_rules.sh
+./builder/steps/add_tracks.sh
+./builder/steps/autoroute.sh
+./builder/steps/plot_gerbers_and_images.sh
 
 log_info "\033[0;32m --- All Done ---\033[0m"
 

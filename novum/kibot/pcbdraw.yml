@@ -1,11 +1,3 @@
-kibot:
-  version: 1
-
-preflight:
-  fill_zones: false
-  drc: false
-  run_erc: false
-
 outputs:
   - name: top_view
     comment: "Top view of the PCB"
@@ -24,3 +16,4 @@ outputs:
     extends: top_view
     options:
       bottom: true
+

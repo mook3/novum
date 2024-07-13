@@ -1,0 +1,47 @@
+name: Build
+description: Build the Novum keyboard
+inputs:
+  version:
+    description: The version text included into the PCBs
+    required: true
+outputs:
+  artifact-url:
+    description: URL to the generated archive
+    value: ${{ steps.upload.outputs.artifact-url }}
+runs:
+  using: "composite"
+  steps:
+    - name: Generate unrouted PCBs
+      shell: bash
+      run: ./builder/steps/generate.sh
+      env:
+        NOVUM_VERSION: ${{ inputs.version }}
+
+    - name: Add JLCPCB desing rules
+      shell: bash
+      run: ./builder/steps/add_design_rules.sh
+
+    - name: Add hand-routed tracks
+      shell: bash
+      run: ./builder/steps/add_tracks.sh
+
+    - name: Autoroute
+      uses: docker://ghcr.io/henkru/ergo-builder:1.2.0
+      with:
+        args: ./builder/steps/autoroute.sh
+
+    - name: Plot gerbers and images
+      shell: bash
+      run: ./builder/steps/plot_gerbers_and_images.sh
+
+    - name: Persist output
+      id: upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: novum
+        path: out
+        retention-days: 30
+
+    - name: Compress
+      shell: bash
+      run: cd out && zip -r ../novum.zip .
