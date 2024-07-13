@@ -370,6 +370,18 @@ pcbs:
         what: mounting_hole_plated
         where: [[-/^mirror_.*/, mount]]
         params.drill: 3.1
+      text_left:
+        what: text
+        where:
+          ref: matrix_inner_num
+          shift: [mcu_shift_x, mcu_shift_y]
+        params:
+          text: "Left\\nUp"
+      text_commit:
+        what: commit
+        where:
+          ref: matrix_inner_num
+          shift: [mcu_shift_x, mcu_shift_y + 16]
   right:
     template: kicad8
     outlines:
@@ -471,6 +483,18 @@ pcbs:
         what: mounting_hole_plated
         where: [[/^mirror_.*/, mount]]
         params.drill: 3.1
+      text_right:
+        what: text
+        where:
+          ref: mirror_matrix_inner_num
+          shift: [mcu_shift_x, mcu_shift_y]
+        params:
+          text: "Right\\nUp"
+      text_commit:
+        what: commit
+        where:
+          ref: mirror_matrix_inner_num
+          shift: [mcu_shift_x, mcu_shift_y + 16]
   switch_plate:
     template: kicad8
     outlines:
