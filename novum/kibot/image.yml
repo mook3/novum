@@ -1,0 +1,26 @@
+kibot:
+  version: 1
+
+preflight:
+  fill_zones: false
+  drc: false
+  run_erc: false
+
+outputs:
+  - name: top_view
+    comment: "Top view of the PCB"
+    type: pcbdraw
+    dir: out/novum/images
+    options:
+      format: png
+      style: set-black-enig.json
+      margin: 5
+      show_solderpaste: false
+
+  - name: bottom_view
+    comment: "Bottom view of the PCB"
+    type: pcbdraw
+    dir: out/novum/images
+    extends: top_view
+    options:
+      bottom: true

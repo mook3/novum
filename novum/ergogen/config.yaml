@@ -486,3 +486,11 @@ pcbs:
     outlines:
       main:
         outline: board_left
+  bottom_board_with_art:
+    template: kicad8
+    outlines:
+      main:
+        outline: board_left
+    footprints:
+      art:
+        what: artwork
