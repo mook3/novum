@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import sys
+import os.path
 import getopt
 import pcbnew
 """
@@ -32,6 +33,9 @@ def main(argv):
         board.Remove(zone)
 
     pcbnew.ExportSpecctraDSN(board, output_file)
+    if not os.path.isfile(output_file):
+        print(f"Error creating {output_file}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
