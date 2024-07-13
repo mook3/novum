@@ -22,6 +22,7 @@ COPY xvfb-startup.sh /
 RUN sed -i 's/\r$//' /xvfb-startup.sh
 ENV XVFB_RES="${RESOLUTION}"
 ENV XVFB_ARGS="${XARGS}"
+ENV FREEROUTING_PATH="/freerouting.jar"
 
 WORKDIR /kicad-project
 ENTRYPOINT ["/bin/bash", "/xvfb-startup.sh"]
