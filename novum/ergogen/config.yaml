@@ -20,6 +20,8 @@ units:
   mcu_shift_x: kx + 2
   mcu_shift_y: -13.5
   conn_cut_width: 18
+  mounting_spacer_diameter: 3.1
+  mounting_hole_diameter: 2.2
   trrs_shift_x: kx + 17
   trrs_shift_y: mcu_shift_y - 22.5
   reset_shift_x: kx + 13.6
@@ -223,7 +225,7 @@ outlines:
   # Mounting holes
   _mounting_holes:
     - what: circle
-      radius: 1.1
+      radius: mounting_hole_diameter/2
       where: mount
   # Board outlines
   board_outline_left:
@@ -369,7 +371,7 @@ pcbs:
       mounting:
         what: mounting_hole_plated
         where: [[-/^mirror_.*/, mount]]
-        params.drill: 3.1
+        params.drill: mounting_spacer_diameter
       text_left:
         what: text
         where:
@@ -482,7 +484,7 @@ pcbs:
       mounting:
         what: mounting_hole_plated
         where: [[/^mirror_.*/, mount]]
-        params.drill: 3.1
+        params.drill: mounting_spacer_diameter
       text_right:
         what: text
         where:
@@ -499,12 +501,7 @@ pcbs:
     template: kicad8
     outlines:
       main:
-        outline: switch_plate
-    footprints:
-      mounting:
-        what: mounting_hole_plated
-        where: [[-/^mirror_.*/, mount]]
-        params.drill: 2.2
+        outline: switch_plate_with_mouting
   bottom_board:
     template: kicad8
     outlines:
