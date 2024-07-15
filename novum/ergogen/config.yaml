@@ -216,7 +216,7 @@ outlines:
       size: [conn_cut_width, 10]
       where:
         ref: mirror_matrix_inner_num
-        shift: [kx + 2, 10.7]
+        shift: [kx + 2, conn_cut_shift_y]
   _arches_right:
     [
       +_top_arch_circle_right,
@@ -435,12 +435,12 @@ pcbs:
         params:
           orientation: down
           P20: GND # Right side indicator
-          P21: ROW0
+          P3:  ROW0
           P4:  ROW1
           P14: ROW2
           P16: ROW3
           P10: ROW4
-          P15: COL0
+          P2:  COL0
           P5:  COL1
           P6:  COL2
           P7:  COL3
