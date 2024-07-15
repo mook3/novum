@@ -27,6 +27,7 @@ units:
   trrs_shift_y: mcu_shift_y - 22.5
   reset_shift_x: kx + 13.6
   reset_shfit_y: trrs_shift_y - 6.5
+  tenting_puck_shift_y: -ky/2 - 5.6
 points:
   zones:
     matrix:
@@ -385,6 +386,11 @@ pcbs:
         where:
           ref: matrix_inner_num
           shift: [mcu_shift_x, mcu_shift_y + 16.5]
+      tenting_puck:
+        what: tenting_puck
+        where:
+          ref: matrix_middle_home
+          shift: [kx/2, tenting_puck_shift_y]
   right:
     template: kicad8
     outlines:
@@ -498,6 +504,11 @@ pcbs:
         where:
           ref: mirror_matrix_inner_num
           shift: [mcu_shift_x, mcu_shift_y + 16.5]
+      tenting_puck:
+        what: tenting_puck
+        where:
+          ref: mirror_matrix_middle_home
+          shift: [kx/2, tenting_puck_shift_y]
   switch_plate:
     template: kicad8
     outlines:
