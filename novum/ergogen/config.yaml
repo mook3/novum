@@ -294,7 +294,6 @@ pcbs:
         where: [[-/^mirror_.*/, [switch, encoder]]]
         asym: source
         adjust:
-          rotate: 180
           shift: [ 0, 4.5 ]
         params:
           from: "{{colrow}}"
@@ -302,8 +301,8 @@ pcbs:
       encoder:
         what: rotary
         params:
-          from: ROW4
-          to: COL5
+          from: COL5
+          to: ROW4
           A: ENC1_A
           B: ENC1_B
           C: GND
@@ -412,7 +411,6 @@ pcbs:
         where: [[/^mirror_.*/, [switch, encoder]]]
         asym: source
         adjust:
-          rotate: 180
           shift: [ 0, 4.5 ]
         params:
           from: "{{colrow}}"
@@ -420,8 +418,8 @@ pcbs:
       encoder:
         what: rotary
         params:
-          from: ROW4
-          to: COL5
+          from: COL5
+          to: ROW4
           A: ENC1_A
           B: ENC1_B
           C: GND
