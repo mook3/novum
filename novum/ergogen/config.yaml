@@ -20,6 +20,7 @@ units:
   mcu_shift_x: kx + 2
   mcu_shift_y: -13.5
   conn_cut_width: 18
+  conn_cut_shift_y: 9.6
   mounting_spacer_diameter: 3.1
   mounting_hole_diameter: 2.2
   trrs_shift_x: kx + 17
@@ -176,7 +177,7 @@ outlines:
       size: [conn_cut_width, 10]
       where:
         ref: matrix_inner_num
-        shift: [kx + 2, 10.7]
+        shift: [kx + 2, conn_cut_shift_y]
   _arches_left:
     [
       +_top_arch_circle_left,
