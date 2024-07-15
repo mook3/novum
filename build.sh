@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 log_info() {
     BLUE='\033[0;34m'
