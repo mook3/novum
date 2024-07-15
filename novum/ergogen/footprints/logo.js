@@ -9,6 +9,18 @@ module.exports = {
 	(generator_version "8.0")
 	(layer "F.Cu")
   ${p.at}
+	(property "Reference" "${p.ref}"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "82e9786e-2c39-443a-b6fe-bcbadb763d3c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
 	(property "Value" "Logo"
 		(at 0 1 0)
 		(unlocked yes)

@@ -19,7 +19,7 @@ module.exports = {
 	(generator_version "8.0")
 	(layer "F.Cu")
   ${p.at}
-	(property "Reference" "REF**"
+	(property "Reference" "${p.ref}"
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
