@@ -532,6 +532,46 @@ pcbs:
     outlines:
       main:
         outline: switch_plate_with_mouting
+    footprints:
+      text_version_front:
+        what: version
+        where:
+          ref: matrix_outer_top
+          shift: [kx/2, -ky/2]
+          rotate: 90
+        params:
+          layer: Cu
+          side: F
+      text_version_back:
+        what: version
+        where:
+          ref: matrix_outer_top
+          shift: [kx/2, -ky/2]
+          rotate: 90
+        params:
+          layer: Cu
+          side: B
+          mirrored: true
+      zone_front:
+        what: zone
+        where:
+          ref: matrix_outer_num
+          shift: [-1kx, 1.2ky]
+        params:
+          net: ''
+          side: F
+          width: 8.5kx
+          height: 6.5ky
+      zone_back:
+        what: zone
+        where:
+          ref: matrix_outer_num
+          shift: [-1kx, 1.2ky]
+        params:
+          net: ''
+          side: B
+          width: 8.5kx
+          height: 6.5ky
   bottom_board_with_art:
     template: kicad8
     outlines:
@@ -545,6 +585,58 @@ pcbs:
     outlines:
       main:
         outline: board_tenting_puck_left
+    footprints: &bottom_footprints
+      logo_front:
+        what: logo
+        where:
+          ref: matrix_middle_num
+          shift: [kx/2, -ky/2]
+      logo_back:
+        what: logo
+        where:
+          ref: matrix_middle_num
+          shift: [kx/2, -ky/2]
+        params:
+          mirrored: true
+      text_version_front:
+        what: version
+        where:
+          ref: matrix_outer_top
+          shift: [kx/2, -ky/2]
+          rotate: 90
+        params:
+          layer: Cu
+          side: F
+      text_version_back:
+        what: version
+        where:
+          ref: matrix_outer_top
+          shift: [kx/2, -ky/2]
+          rotate: 90
+        params:
+          layer: Cu
+          side: B
+          mirrored: true
+      zone_front:
+        what: zone
+        where:
+          ref: matrix_outer_num
+          shift: [-1kx, 1.2ky]
+        params:
+          net: ''
+          side: F
+          width: 8.5kx
+          height: 6.5ky
+      zone_back:
+        what: zone
+        where:
+          ref: matrix_outer_num
+          shift: [-1kx, 1.2ky]
+        params:
+          net: ''
+          side: B
+          width: 8.5kx
+          height: 6.5ky
   bottom_board_empty:
     template: kicad8
     outlines:
