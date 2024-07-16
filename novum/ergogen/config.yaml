@@ -230,6 +230,13 @@ outlines:
     - what: circle
       radius: mounting_hole_diameter/2
       where: mount
+  # Tenting Puck
+  _tenting_puck:
+    - what: circle
+      radius: 41.5/2
+      where:
+        ref: matrix_middle_home
+        shift: [kx/2, tenting_puck_shift_y]
   # Board outlines
   board_outline_left:
     - what: outline
@@ -247,6 +254,8 @@ outlines:
     [ board_outline_left, -_conn_cut_left]
   board_pcb_right:
     [ board_outline_right, -_conn_cut_right]
+  board_tenting_puck_left:
+    [ board_left, -_tenting_puck]
   # Switch plate
   _switch_cutouts:
     - what: rectangle
@@ -523,11 +532,6 @@ pcbs:
     outlines:
       main:
         outline: switch_plate_with_mouting
-  bottom_board:
-    template: kicad8
-    outlines:
-      main:
-        outline: board_left
   bottom_board_with_art:
     template: kicad8
     outlines:
@@ -536,3 +540,14 @@ pcbs:
     footprints:
       art:
         what: artwork
+  bottom_board_with_tenting_puck:
+    template: kicad8
+    outlines:
+      main:
+        outline: board_tenting_puck_left
+  bottom_board_empty:
+    template: kicad8
+    outlines:
+      main:
+        outline: board_left
+    footprints: *bottom_footprints

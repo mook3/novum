@@ -9,7 +9,7 @@ log_info() {
     echo "${BLUE}[rules]${NC}: ${BOLD}$1${NC}"
 }
 
-set -- left right switch_plate bottom_board
+set -- left right switch_plate bottom_board_empty bottom_board_with_tenting_puck
 
 for BOARD in "$@"; do
     log_info "Adding JLCPCB design rules: $BOARD"
