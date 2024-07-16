@@ -342,8 +342,8 @@ pcbs:
         params:
           A: VCC
           B: DATA
-          C: ''
-          D: GND
+          C: GND
+          D: ''
       reset:
         what: reset_button
         where:
@@ -464,8 +464,8 @@ pcbs:
         params:
           A: VCC
           B: DATA
-          C: ''
-          D: GND
+          C: GND
+          D: ''
       reset:
         what: reset_button
         where:
