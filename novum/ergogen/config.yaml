@@ -311,8 +311,8 @@ pcbs:
       encoder:
         what: rotary
         params:
-          from: COL5
-          to: ROW4
+          from: col_row
+          to: COL5
           A: ENC1_A
           B: ENC1_B
           C: GND
@@ -434,7 +434,7 @@ pcbs:
         what: rotary
         params:
           from: COL5
-          to: ROW4
+          to: mirror_col_row
           A: ENC1_A
           B: ENC1_B
           C: GND
