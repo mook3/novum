@@ -41,6 +41,7 @@ fi
 ./builder/steps/autoroute.sh
 ./builder/steps/plot_gerbers_and_images.sh
 ./builder/steps/build_qmk.sh
+./builder/steps/build_vial.sh
 
 log_info "\033[0;32m --- All Done ---\033[0m"
 

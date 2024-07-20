@@ -39,11 +39,6 @@ jobs:
         with:
           version: ${{ steps.bump_version.outputs.version }}
 
-      - name: Build QMK Firmware
-        uses: docker://ghcr.io/qmk/qmk_cli
-        with:
-          args: ./builder/steps/build_qmk.sh
-
       - name: Update doc images
         run: |
           mkdir -p docs

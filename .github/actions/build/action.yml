@@ -39,6 +39,11 @@ runs:
       with:
         args: ./builder/steps/build_qmk.sh
 
+    - name: Build QMK Vial Firmware
+      uses: docker://ghcr.io/qmk/qmk_cli
+      with:
+        args: ./builder/steps/build_vial.sh
+
     - name: Persist output
       id: upload
       uses: actions/upload-artifact@v4
