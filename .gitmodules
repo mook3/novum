@@ -1,0 +1,6 @@
+[submodule "modules/qmk_firmware"]
+	path = modules/qmk_firmware
+	url = git@github.com:qmk/qmk_firmware.git
+[submodule "modules/vial-qmk"]
+	path = modules/vial-qmk
+	url = https://github.com/vial-kb/vial-qmk

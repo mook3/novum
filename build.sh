@@ -40,6 +40,7 @@ fi
 ./builder/steps/add_tracks.sh
 ./builder/steps/autoroute.sh
 ./builder/steps/plot_gerbers_and_images.sh
+./builder/steps/build_qmk.sh
 
 log_info "\033[0;32m --- All Done ---\033[0m"
 

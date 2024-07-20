@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: 'true'
 
       - name: Generate Version String
         id: vars
@@ -31,6 +33,11 @@ jobs:
         uses: ./.github/actions/build
         with:
           version: ${{ steps.vars.outputs.version }}
+
+      - name: Build QMK Firmware
+        uses: docker://ghcr.io/qmk/qmk_cli
+        with:
+          args: ./builder/steps/build_qmk.sh
 
       - name: Add Artifact Url
         if: github.event_name == 'pull_request'

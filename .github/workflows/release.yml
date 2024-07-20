@@ -18,12 +18,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: 'true'
 
       - name: Bump Version
         id: bump_version
         run: |
           if ${{ contains(github.event.head_commit.message, '[major]') }}; then
             VERSION=$(npm version major --git-tag-version false)
+          elif ${{ contains(github.event.head_commit.message, '[patch]') }}; then
+            VERSION=$(npm version patch --git-tag-version false)
           else
             VERSION=$(npm version minor --git-tag-version false)
           fi
@@ -34,6 +38,11 @@ jobs:
         uses: ./.github/actions/build
         with:
           version: ${{ steps.bump_version.outputs.version }}
+
+      - name: Build QMK Firmware
+        uses: docker://ghcr.io/qmk/qmk_cli
+        with:
+          args: ./builder/steps/build_qmk.sh
 
       - name: Update doc images
         run: |
