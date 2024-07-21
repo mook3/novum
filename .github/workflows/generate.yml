@@ -33,6 +33,8 @@ jobs:
         uses: ./.github/actions/build
         with:
           version: ${{ steps.vars.outputs.version }}
+        env:
+          SKIP_BOTTOM_WITH_ART: ${{ !contains(github.event.head_commit.message, '[plot-bottom-art]') }}
 
       - name: Add Artifact Url
         if: github.event_name == 'pull_request'
