@@ -10,7 +10,9 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
+      checks: write
       contents: read
+      actions: read
     container:
       image: ghcr.io/henkru/ergo-builder:1.2.0
     timeout-minutes: 30
@@ -47,3 +49,11 @@ jobs:
               repo: context.repo.repo,
               body: 'Here is your ⌨️: ${{steps.build.outputs.artifact-url}}'
             })
+
+      - name: Upload failed tests
+        if: github.event_name == 'pull_request'
+        uses: edunad/actions-image@eef0041f6e888b797e3d11c3eee4791c01e08780
+        with:
+            path: ./out/novum/images/*.png
+            title: '🧩 PCBs'
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
