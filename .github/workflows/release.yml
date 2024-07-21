@@ -74,6 +74,7 @@ jobs:
           configurationJson: |
             {
               "template": "#{{CHANGELOG}}",
+              "pr_template": "- #{{TITLE}}",
               "categories": [
                 {
                     "title": "## Feature",
