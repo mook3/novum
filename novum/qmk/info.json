@@ -1,17 +1,16 @@
 {
-    "manufacturer": "Henri Nurmi",
-    "keyboard_name": "Novum",
-    "maintainer": "Henkru",
-    "url": "https://github.com/henkru/novum",
-    "usb": {
-        "device_version": "1.0.0",
-        "pid": "0x1551",
-        "vid": "0xFEED"
-    },
-    "split": {
-        "enabled": true
-    },
-    "build": {
-        "lto": true
-    }
+  "manufacturer": "Henri Nurmi",
+  "maintainer": "Henkru",
+  "url": "https://github.com/henkru/novum",
+  "usb": {
+    "device_version": "1.0.0",
+    "pid": "0x1551",
+    "vid": "0xFEED"
+  },
+  "split": {
+    "enabled": true
+  },
+  "build": {
+    "lto": true
+  }
 }
