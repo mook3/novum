@@ -1,8 +1,8 @@
-[submodule "modules/qmk_firmware"]
-	path = modules/qmk_firmware
+[submodule "external/qmk_firmware"]
+	path = external/qmk_firmware
 	url = git@github.com:qmk/qmk_firmware.git
-    ignore = all
-[submodule "modules/vial-qmk"]
-	path = modules/vial-qmk
+    ignore = dirty
+[submodule "external/vial-qmk"]
+	path = external/vial-qmk
 	url = https://github.com/vial-kb/vial-qmk
-    ignore = all
+    ignore = dirty
