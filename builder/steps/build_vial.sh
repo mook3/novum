@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cp -r novum/qmk modules/vial-qmk/keyboards/novum
-cd modules/qmk_firmware || exit 1
+cd modules/vial-qmk || exit 1
 make novum/rev1:vial
 
 mkdir -p ../../out/novum/fw
