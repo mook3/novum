@@ -1,6 +1,6 @@
 {
   "name": "novum",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "Novum Split Keyboard",
   "scripts": {
     "generate": "ergogen novum/ergogen -o out/novum",
