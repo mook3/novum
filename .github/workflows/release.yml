@@ -52,7 +52,7 @@ jobs:
           commit_message: "📦 ${{ steps.bump_version.outputs.version }} [release]"
           repo: ${{ github.repository }}
           branch: ${{ github.head_ref || github.ref_name }}
-          file_pattern: 'package.json package-lock.json docs/images/*'
+          file_pattern: 'package.json package-lock.json docs/images/* docs/layout/*'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
