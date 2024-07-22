@@ -11,7 +11,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[release]') && !contains(github.event.head_commit.message, '[norelease]')"
     runs-on: ubuntu-22.04
     container:
-      image: ghcr.io/henkru/ergo-builder:1.2.0
+      image: ghcr.io/henkru/ergo-builder:1.3.2
     permissions:
       contents: write
     timeout-minutes: 30
@@ -39,10 +39,11 @@ jobs:
         with:
           version: ${{ steps.bump_version.outputs.version }}
 
-      - name: Update doc images
+      - name: Update docs
         run: |
           mkdir -p docs
           cp -r out/novum/images docs
+          cp -r out/novum/layout docs
 
       - name: Commit
         uses: Henkru/ghcommit-action@commit-output

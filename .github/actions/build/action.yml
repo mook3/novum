@@ -26,7 +26,7 @@ runs:
       run: ./builder/steps/add_tracks.sh
 
     - name: Autoroute
-      uses: docker://ghcr.io/henkru/ergo-builder:1.2.0
+      uses: docker://ghcr.io/henkru/ergo-builder:1.3.2
       with:
         args: ./builder/steps/autoroute.sh
 
@@ -43,6 +43,11 @@ runs:
       uses: docker://ghcr.io/qmk/qmk_cli
       with:
         args: ./builder/steps/build_vial.sh
+
+    - name: Generate layout images
+      uses: docker://ghcr.io/henkru/ergo-builder:1.3.2
+      with:
+        args: ./builder/steps/generate_layout_images.sh
 
     - name: Persist output
       id: upload
