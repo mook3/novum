@@ -66,8 +66,17 @@ TODO
 
 ## Firmware
 
-TODO
+Any [RP2040 Community Edition](https://github.com/qmk/qmk_firmware/blob/master/docs/platformdev_rp2040.md)
+standard boards should. However, the keyboard is only tested with [Liatris](https://splitkb.com/products/liatris)
+and [SparkFun Pro Micro - RP2040](https://www.sparkfun.com/products/18288) boards.
+The following firmware is currently supported, and the pre-build binaries can
+be found on the [Releases](https://github.com/Henkru/novum/releases) page.
+
+* [QMK](https://github.com/qmk/qmk_firmware)
+* [Vial](https://github.com/vial-kb/vial-qmk)
+
+At the moment, the keyboard has not been merged into the above mainline repos.
 
 ## Default Layout
 
-TODO
+![The default layout for the keyboard](/docs/layout/rev1_vial.svg)
