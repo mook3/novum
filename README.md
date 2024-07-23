@@ -1,4 +1,4 @@
-# Novum
+# Novum - rev1
 
 The split keyboard for me (it may not be for you).
 
