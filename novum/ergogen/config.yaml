@@ -255,7 +255,7 @@ outlines:
   board_pcb_right:
     [ board_outline_right, -_conn_cut_right]
   board_tenting_puck_left:
-    [ board_left, -_tenting_puck]
+    [ board_outline_left, -_tenting_puck]
   # Switch plate
   _switch_cutouts:
     - what: rectangle
@@ -531,8 +531,13 @@ pcbs:
     template: kicad8
     outlines:
       main:
-        outline: switch_plate_with_mouting
+        outline: switch_plate
     footprints:
+      mounting:
+        what: mounting_hole_npth
+        where: [[-/^mirror_.*/, mount]]
+        params.hole_size: mounting_hole_diameter
+        params.hole_drill: mounting_hole_diameter
       text_version_front:
         what: version
         where:
@@ -576,8 +581,13 @@ pcbs:
     template: kicad8
     outlines:
       main:
-        outline: board_left
+        outline: board_outline_left
     footprints:
+      mounting:
+        what: mounting_hole_npth
+        where: [[-/^mirror_.*/, mount]]
+        params.hole_size: mounting_hole_diameter
+        params.hole_drill: mounting_hole_diameter
       art:
         what: artwork
   bottom_board_with_tenting_puck:
@@ -586,6 +596,11 @@ pcbs:
       main:
         outline: board_tenting_puck_left
     footprints: &bottom_footprints
+      mounting:
+        what: mounting_hole_npth
+        where: [[-/^mirror_.*/, mount]]
+        params.hole_size: mounting_hole_diameter
+        params.hole_drill: mounting_hole_diameter
       logo_front:
         what: logo
         where:
@@ -641,5 +656,5 @@ pcbs:
     template: kicad8
     outlines:
       main:
-        outline: board_left
+        outline: board_outline_left
     footprints: *bottom_footprints
