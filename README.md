@@ -2,6 +2,8 @@
 
 The split keyboard for me (it may not be for you).
 
+![Novum keyboard](/docs/images/novum.jpg)
+
 ## Background
 
 I began my split keyboard journey with the [Lily58](https://github.com/kata0510/Lily58),
@@ -58,11 +60,20 @@ can be extracted from the `.kicad_pcb` files by executing `npm run export-tracks
 
 ## BOM
 
-TODO
-
-## Build Notes
-
-TODO
+| Item | Quantity | Notes |
+|------|----------|-------|
+| Novum Left PCB  | 1 |   |
+| Novum Right PCB | 1 |   |
+| Novum Switch Plate | 2 |  |
+| Novum Bottom Plate | 2 | Three different version available, see [images](https://github.com/Henkru/novum/tree/main/docs/images) |
+| [1N4148W Diode](https://www.lcsc.com/product-detail/Switching-Diodes_Jiangsu-Changjing-Electronics-Technology-Co-Ltd-1N4148W_C2099.html) | 58 | SOD-123 or through hole|
+| [Kailh Hot-Swap Socket](https://www.lcsc.com/product-detail/Mechanical-Keyboard-Shaft_Kailh-CPG151101S11-16_C5156480.html) | 56 | |
+| [RP2040 Community Edition](https://github.com/qmk/qmk_firmware/blob/master/docs/platformdev_rp2040.md) MCU Board | 2 | |
+| [PJ-320A TRRS Jack](https://www.lcsc.com/product-detail/Audio-Connectors-Headphones_XKB-Connection-PJ-320A_C2884926.html) | 2 | |
+| [SKHLLCA010 Button](https://www.lcsc.com/product-detail/Tactile-Switches_ALPSALPINE-SKHLLCA010_C139766.html) | 2 | |
+| [EC11 Encoder](https://www.lcsc.com/product-detail/Rotary-Encoders_ALPSALPINE-EC11E183440C_C370986.html) | 2 | |
+| M2 x 4 mm screw | 20 | |
+| M2 x 8 mm spacer | 10 | Outer diameter: 3.1 mm |
 
 ## Firmware
 
