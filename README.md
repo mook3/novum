@@ -78,6 +78,7 @@ providing further customization options.
 | Top side                 | Bottom side              |
 |--------------------------|--------------------------|
 | ![](/docs/images/left-top.png) | ![](/docs/images/left-bottom.png) |
+| ![](/docs/images/right-top.png) | ![](/docs/images/right-bottom.png) |
 | ![](/docs/images/switch_plate-top.png) | ![](/docs/images/switch_plate-bottom.png) |
 | ![](/docs/images/bottom_board_with_art-top.png) | ![](/docs/images/bottom_board_with_art-bottom.png) |
 | ![](/docs/images/bottom_board_empty-top.png) | ![](/docs/images/bottom_board_empty-bottom.png) |
