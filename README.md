@@ -3,11 +3,13 @@
 The split keyboard for me (it may not be for you).
 
 ![Novum keyboard](/docs/images/novum.jpg)
+![Novum keyboard](/docs/images/novum_side.jpg)
+![Novum keyboard](/docs/images/novum_cables.jpg)
 
 ## Background
 
 I began my split keyboard journey with the [Lily58](https://github.com/kata0510/Lily58),
-and I've been enjoying it. However, the offset of certain columns wasn't optimal
+and I've been enjoying it. However, the offset of specific columns wasn't optimal
 for my hands, and I couldn't comfortably reach certain keys in the thumb fan.
 The [Sofle](https://josefadamcik.github.io/SofleKeyboard/) solved some of these
 issues, but I decided to create my own split keyboard designed specifically for
@@ -15,11 +17,11 @@ my hands.
 
 As part of using the Lily58, I found out:
 
-* I really didn't use the "extra" key located next to G and H.
+* I didn't use the "extra" key next to G and H.
 * The top left and right keys are too far away to reach.
 * Swapping Ctrl and Shift keys in the default layout didn't work for me.
 
-Novum is inspired by the following split keyboards:
+The following split keyboards inspire Novum:
 
 * [Lily58](https://github.com/kata0510/Lily58)
 * [Sofle](https://github.com/josefadamcik/SofleKeyboard)
@@ -33,12 +35,12 @@ Novum is inspired by the following split keyboards:
   * No RGB nonsense
   * No display
   * No wireless
-* The thumb fan is curved perfectly for my thumb, and keys are not located under
+* The thumb fan is curved perfectly for my thumb, and the keys are not located under
 the hand.
 * Built with [Ergogen](https://github.com/ergogen/ergogen), inspired by
 [corney-island](https://github.com/ceoloide/corney-island/tree/main) and
 [spleeb](https://github.com/chrishoage/spleeb/tree/main).
-* Individual PCBs for the left and right sides. My OCD just does not like the
+* Individual PCBs for the left and right sides. My OCD does not like the
 reversible PCBs.
 
 ## Generate PCBs
@@ -55,8 +57,31 @@ The build process consists of multiple phases:
 4. [Autoroute](https://freerouting.org) the unconnected items.
 5. Use [KiBot](https://github.com/INTI-CMNB/KiBot) to generate gerbers and images.
 
-Each individual step is located in the `builder/steps` folder. Hand-routed tracks
+Each step is located in the `builder/steps` folder. Hand-routed tracks
 can be extracted from the `.kicad_pcb` files by executing `npm run export-tracks`.
+
+## Different PCBs
+
+The  revision 1 is a typical sandwich design, with each layer intended to be a
+1.6 mm thick FR-4 circuit board. This approach reduces costs and streamlines
+manufacturing, as it allows all boards to be ordered from a single supplier.
+
+The current design offers three variants for the bottom board. The *standard*
+version features intricate PCB art on exposed copper layers and requires an
+[ENIG](https://jlcpcb.com/blog/203-choosing-the-right-surface-finish-for-your-pcb/?from=BWBS)
+(Electroless Nickel Immersion Gold) surface finish. If this design feels too
+elaborate, a blank bottom board is also included in the release package as an
+alternative. Additionally, the package contains a bottom board compatible with
+splitkb's [tenting puck](https://splitkb.com/products/tenting-puck) accessary,
+providing further customization options.
+
+| Top side                 | Bottom side              |
+|--------------------------|--------------------------|
+| ![](/docs/images/left-top.png) | ![](/docs/images/left-bottom.png) |
+| ![](/docs/images/switch_plate-top.png) | ![](/docs/images/switch_plate-bottom.png) |
+| ![](/docs/images/bottom_board_with_art-top.png) | ![](/docs/images/bottom_board_with_art-bottom.png) |
+| ![](/docs/images/bottom_board_empty-top.png) | ![](/docs/images/bottom_board_empty-bottom.png) |
+| ![](/docs/images/bottom_board_with_tenting_puck-top.png) | ![](/docs/images/bottom_board_with_tenting_puck-bottom.png) |
 
 ## BOM
 
@@ -86,8 +111,9 @@ be found on the [Releases](https://github.com/Henkru/novum/releases) page.
 * [QMK](https://github.com/qmk/qmk_firmware)
 * [Vial](https://github.com/vial-kb/vial-qmk)
 
-At the moment, the keyboard has not been merged into the above mainline repos.
+Currently, the keyboard has yet to be merged into the above mainline repos.
 
 ## Default Layout
 
 ![The default layout for the keyboard](/docs/layout/rev1_vial.svg)
+
