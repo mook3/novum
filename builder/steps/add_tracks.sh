@@ -1,4 +1,10 @@
 #!/bin/sh
+
+if true; then
+    echo "Skipping step"
+    exit 0
+fi
+
 set -e
 
 log_info() {
