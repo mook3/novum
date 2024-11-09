@@ -8,7 +8,7 @@ units:
   px: kx + 2
   py: ky + 2
   mirror_distance: 10U
-  index_stagger: -4.5
+  index_stagger: -2.5
   arch_top_x: 0
   arch_top_y: -132.5
   arch_bottom_x: -70
@@ -34,6 +34,8 @@ points:
     matrix:
       key.tags: switch
       columns:
+        outer:
+          key.column_net: COL0
         pinky:
           key.column_net: COL1
         ring:
@@ -55,16 +57,21 @@ points:
           row_net: ROW2
         top:
           row_net: ROW1
+        num:
+          row_net: ROW0
       # Fix placement on KiCAD sheet.
       anchor:
         shift: [50, -100]
     thumbs:
       key.tags: switch
       anchor:
-        ref: matrix_index_bottom
+        ref: matrix_middle_bottom
         shift: [0, -ky]
       columns:
+        mod1:
+          key.column_net: COL1
         mod2:
+          key.stagger: index_stagger
           key.column_net: COL2
         layer:
           key:
@@ -80,12 +87,23 @@ points:
       rows:
         cluster:
           row_net: ROW4
+    encoder:
+      key.tags: encoder
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [1.22kx, 0]
+      columns:
+        col:
+          key.column_net: COL5
+      rows:
+        row:
+          row_net: ROW4
     mounting_left:
       key:
         tags: mount
         padding: 2ky
       anchor:
-        ref: matrix_pinky_bottom
+        ref: matrix_outer_bottom
         shift: [kx/2, ky/2]
       columns:
         c1:
@@ -120,7 +138,7 @@ points:
 outlines:
   _keys_normal:
     - what: rectangle
-      where: [switch]
+      where: [switch, encoder]
       size: [kx-1, ky-1]
   _keys_space:
     - what: rectangle
@@ -160,7 +178,7 @@ outlines:
     - what: rectangle
       size: [conn_cut_width, 10]
       where:
-        ref: matrix_inner_top
+        ref: matrix_inner_num
         shift: [kx + 2, conn_cut_shift_y]
   _arches_left:
     [
@@ -198,7 +216,7 @@ outlines:
     - what: rectangle
       size: [conn_cut_width, 10]
       where:
-        ref: mirror_matrix_inner_top
+        ref: mirror_matrix_inner_num
         shift: [kx + 2, conn_cut_shift_y]
   _arches_right:
     [
@@ -241,7 +259,7 @@ outlines:
   # Switch plate
   _switch_cutouts:
     - what: rectangle
-      where: [switch]
+      where: [switch, encoder]
       asym: source
       size: 14
       bound: false
@@ -281,10 +299,30 @@ pcbs:
           to: "{{column_net}}"
           hotswap: true
           keycaps: true
+      diode:
+        what: diode
+        where: [[-/^mirror_.*/, [switch, encoder]]]
+        asym: source
+        adjust:
+          shift: [ 0, 4.5 ]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+      encoder:
+        what: rotary
+        params:
+          from: col_row
+          to: COL5
+          A: ENC1_A
+          B: ENC1_B
+          C: GND
+        where:
+          ref: encoder_col_row
+          rotate: -90
       promicro:
         what: promicro_custom
         where:
-          ref: matrix_inner_top
+          ref: matrix_inner_num
           shift: [mcu_shift_x, mcu_shift_y]
           rotate: -90
         params:
@@ -307,7 +345,7 @@ pcbs:
       trrs:
         what: trrs
         where:
-          ref: matrix_inner_top
+          ref: matrix_inner_num
           shift: [trrs_shift_x, trrs_shift_y]
           rotate: -90
         params:
@@ -318,13 +356,13 @@ pcbs:
       reset:
         what: reset_button
         where:
-          ref: matrix_inner_top
+          ref: matrix_inner_num
           shift: [reset_shift_x, reset_shfit_y]
           rotate: -90
       zone_front:
         what: zone
         where:
-          ref: matrix_pinky_top
+          ref: matrix_outer_num
           shift: [-1kx, 1.2ky]
         params:
           net: VCC
@@ -334,7 +372,7 @@ pcbs:
       zone_back:
         what: zone
         where:
-          ref: matrix_pinky_top
+          ref: matrix_outer_num
           shift: [-1kx, 1.2ky]
         params:
           net: GND
@@ -348,14 +386,14 @@ pcbs:
       text_left:
         what: text
         where:
-          ref: matrix_inner_top
+          ref: matrix_inner_num
           shift: [mcu_shift_x, mcu_shift_y]
         params:
           text: "Left\\nUp"
       text_version:
         what: version
         where:
-          ref: matrix_inner_top
+          ref: matrix_inner_num
           shift: [mcu_shift_x, mcu_shift_y + 16.5]
       tenting_puck:
         what: tenting_puck
@@ -383,10 +421,30 @@ pcbs:
           to: "{{column_net}}"
           hotswap: true
           keycaps: true
+      diode:
+        what: diode
+        where: [[/^mirror_.*/, [switch, encoder]]]
+        asym: source
+        adjust:
+          shift: [ 0, 4.5 ]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+      encoder:
+        what: rotary
+        params:
+          from: COL5
+          to: mirror_col_row
+          A: ENC1_A
+          B: ENC1_B
+          C: GND
+        where:
+          ref: mirror_encoder_col_row
+          rotate: 90
       promicro:
         what: promicro_custom
         where:
-          ref: mirror_matrix_inner_top
+          ref: mirror_matrix_inner_num
           shift: [mcu_shift_x, mcu_shift_y]
           rotate: 90
         params:
@@ -409,7 +467,7 @@ pcbs:
       trrs:
         what: trrs
         where:
-          ref: mirror_matrix_inner_top
+          ref: mirror_matrix_inner_num
           shift: [trrs_shift_x, trrs_shift_y + 4.6]
           rotate: -90
         params:
@@ -420,13 +478,13 @@ pcbs:
       reset:
         what: reset_button
         where:
-          ref: mirror_matrix_inner_top
+          ref: mirror_matrix_inner_num
           shift: [reset_shift_x, reset_shfit_y]
           rotate: -90
       zone_front:
         what: zone
         where:
-          ref: mirror_matrix_pinky_top
+          ref: mirror_matrix_outer_num
           shift: [-1kx, 1.2ky]
         params:
           net: VCC
@@ -436,7 +494,7 @@ pcbs:
       zone_back:
         what: zone
         where:
-          ref: mirror_matrix_pinky_top
+          ref: mirror_matrix_outer_num
           shift: [-1kx, 1.2ky]
         params:
           net: GND
@@ -450,14 +508,14 @@ pcbs:
       text_right:
         what: text
         where:
-          ref: mirror_matrix_inner_top
+          ref: mirror_matrix_inner_num
           shift: [mcu_shift_x, mcu_shift_y]
         params:
           text: "Right\\nUp"
       text_version:
         what: version
         where:
-          ref: mirror_matrix_inner_top
+          ref: mirror_matrix_inner_num
           shift: [mcu_shift_x, mcu_shift_y + 16.5]
       tenting_puck:
         what: tenting_puck
@@ -483,7 +541,7 @@ pcbs:
       text_version_front:
         what: version
         where:
-          ref: matrix_pinky_top
+          ref: matrix_outer_top
           shift: [kx/2, -ky/2]
           rotate: 90
         params:
@@ -492,7 +550,7 @@ pcbs:
       text_version_back:
         what: version
         where:
-          ref: matrix_pinky_top
+          ref: matrix_outer_top
           shift: [kx/2, -ky/2]
           rotate: 90
         params:
@@ -502,7 +560,7 @@ pcbs:
       zone_front:
         what: zone
         where:
-          ref: matrix_pinky_top
+          ref: matrix_outer_num
           shift: [-1kx, 1.2ky]
         params:
           net: ''
@@ -512,7 +570,7 @@ pcbs:
       zone_back:
         what: zone
         where:
-          ref: matrix_pinky_top
+          ref: matrix_outer_num
           shift: [-1kx, 1.2ky]
         params:
           net: ''
@@ -546,19 +604,19 @@ pcbs:
       logo_front:
         what: logo
         where:
-          ref: matrix_middle_top
+          ref: matrix_middle_num
           shift: [kx/2, -ky/2]
       logo_back:
         what: logo
         where:
-          ref: matrix_middle_top
+          ref: matrix_middle_num
           shift: [kx/2, -ky/2]
         params:
           mirrored: true
       text_version_front:
         what: version
         where:
-          ref: matrix_pinky_top
+          ref: matrix_outer_top
           shift: [kx/2, -ky/2]
           rotate: 90
         params:
@@ -567,7 +625,7 @@ pcbs:
       text_version_back:
         what: version
         where:
-          ref: matrix_pinky_top
+          ref: matrix_outer_top
           shift: [kx/2, -ky/2]
           rotate: 90
         params:
@@ -577,7 +635,7 @@ pcbs:
       zone_front:
         what: zone
         where:
-          ref: matrix_pinky_top
+          ref: matrix_outer_num
           shift: [-1kx, 1.2ky]
         params:
           net: ''
@@ -587,7 +645,7 @@ pcbs:
       zone_back:
         what: zone
         where:
-          ref: matrix_pinky_top
+          ref: matrix_outer_num
           shift: [-1kx, 1.2ky]
         params:
           net: ''
