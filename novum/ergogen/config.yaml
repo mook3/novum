@@ -3,20 +3,28 @@ meta:
   version: 0.0.1
   author: Henri Nurmi
 units:
-  kx: u
-  ky: u
+  $default_width: cx-1
+  $default_height: cy-1
+  $default_spread: cx
+  $default_padding: cy
+  kx: cx
+  ky: cy
   px: kx + 2
   py: ky + 2
   mirror_distance: 10U
   index_stagger: -4.5
   arch_top_x: 0
-  arch_top_y: -132.5
-  arch_bottom_x: -70
+  arch_top_y: -65
+  arch_top_radius: 110
+  arch_bottom_x: -60
   arch_bottom_y: -323
-  arch_left_x: 230.5
-  arch_left_y: 16
-  arch_right_x: -224
+  arch_bottom_radius: 300
+  arch_left_x: 290
+  arch_left_y: 0
+  arch_left_radius: 300
+  arch_right_x: -230
   arch_right_y: 20
+  arch_right_radius: 300
   mcu_shift_x: kx + 2
   mcu_shift_y: -13.5
   conn_cut_width: 18
@@ -73,7 +81,6 @@ points:
           key.column_net: COL3
         space:
           key:
-            width: 1.5kx
             rotate: 67
             shift: [1, -14]
           key.column_net: COL4
@@ -82,6 +89,8 @@ points:
           row_net: ROW4
     mounting_left:
       key:
+        width: 2
+        height: 2
         tags: mount
         padding: 2ky
       anchor:
@@ -94,6 +103,8 @@ points:
         r2:
     mounting_right:
       key:
+        width: 2
+        height: 2
         tags: mount
         padding: 3ky + 1
       anchor:
@@ -106,6 +117,8 @@ points:
         r2:
     mounting_thumb:
       key:
+        width: 2
+        height: 2
         tags: mount
       anchor:
         ref: thumbs_space_cluster
@@ -118,41 +131,31 @@ points:
     ref: matrix_middle_bottom
     distance: mirror_distance
 outlines:
-  _keys_normal:
+  keys:
     - what: rectangle
       where: [switch]
       size: [kx-1, ky-1]
-  _keys_space:
-    - what: rectangle
-      where:
-        ref: thumbs_space_cluster
-      size: [1.5kx-1, ky-1]
-  keys:
-    - name: _keys_normal
-    - operation: stack
-      name: _keys_space
-  # Outline arches for left side
   _top_arch_circle_left:
     - what: circle
-      radius: 200
+      radius: arch_top_radius
       where:
         ref: matrix_middle_bottom
         shift: [arch_top_x, arch_top_y]
   _bottom_arch_circle_left:
     - what: circle
-      radius: 300
+      radius: arch_bottom_radius
       where:
         ref: matrix_middle_bottom
         shift: [arch_bottom_x, arch_bottom_y]
   _left_arch_circle_left:
     - what: circle
-      radius: 300
+      radius: arch_left_radius
       where:
-        ref: matrix_middle_bottom
+        ref: matrix_pinky_home
         shift: [arch_left_x, arch_left_y]
   _right_arch_circle_left:
     - what: circle
-      radius: 300
+      radius: arch_right_radius
       where:
         ref: matrix_middle_bottom
         shift: [arch_right_x, arch_right_y]
@@ -172,28 +175,28 @@ outlines:
   # Outline arches for right side
   _top_arch_circle_right:
     - what: circle
-      radius: 200
+      radius: arch_top_radius
       where:
-        ref: matrix_middle_bottom
-        shift: [mirror_distance - arch_top_x, arch_top_y]
+        ref: mirror_matrix_middle_bottom
+        shift: [arch_top_x, arch_top_y]
   _bottom_arch_circle_right:
     - what: circle
-      radius: 300
+      radius: arch_bottom_radius
       where:
-        ref: matrix_middle_bottom
-        shift: [mirror_distance - arch_bottom_x, arch_bottom_y]
+        ref: mirror_matrix_middle_bottom
+        shift: [arch_bottom_x, arch_bottom_y]
   _left_arch_circle_right:
     - what: circle
-      radius: 300
+      radius: arch_left_radius
       where:
-        ref: matrix_middle_bottom
-        shift: [mirror_distance - arch_left_x, arch_left_y]
+        ref: mirror_matrix_pinky_home
+        shift: [arch_left_x, arch_left_y]
   _right_arch_circle_right:
     - what: circle
-      radius: 300
+      radius: arch_right_radius
       where:
-        ref: matrix_middle_bottom
-        shift: [mirror_distance - arch_right_x, arch_right_y]
+        ref: mirror_matrix_middle_bottom
+        shift: [arch_right_x, arch_right_y]
   _conn_cut_right:
     - what: rectangle
       size: [conn_cut_width, 10]
