@@ -11,7 +11,6 @@ units:
   ky: cy
   px: kx + 2
   py: ky + 2
-  mirror_distance: 10U
   index_stagger: -4.5
   arch_top_x: 0
   arch_top_y: -65
@@ -21,7 +20,7 @@ units:
   arch_bottom_radius: 300
   arch_left_x: 290
   arch_left_y: 0
-  arch_left_radius: 300
+  arch_left_radius: 302
   arch_right_x: -230
   arch_right_y: 20
   arch_right_radius: 300
@@ -43,26 +42,49 @@ points:
       key.tags: switch
       columns:
         pinky:
-          key.column_net: COL1
+          rows:
+            bottom:
+              key_net: P6
+            home:
+              key_net: P5
+            top:
+              key_net: P4
         ring:
           key.stagger: 9
-          key.column_net: COL2
+          rows:
+            bottom:
+              key_net: P3
+            home:
+              key_net: P2
+            top:
+              key_net: P0
         middle:
           key.stagger: 2.5
-          key.column_net: COL3
+          rows:
+            bottom:
+              key_net: P1
+            home:
+              key_net: P18
+            top:
+              key_net: P15
         index:
           key.stagger: index_stagger
-          key.column_net: COL4
+          rows:
+            bottom:
+              key_net: P14
+            home:
+              key_net: P16
+            top:
+              key_net: P10
         inner:
           key.stagger: -3.5
-          key.column_net: COL5
-      rows:
-        bottom:
-          row_net: ROW3
-        home:
-          row_net: ROW2
-        top:
-          row_net: ROW1
+          rows:
+            bottom:
+              key_net: P19
+            home:
+              key_net: P20
+            top:
+              key_net: P21
       # Fix placement on KiCAD sheet.
       anchor:
         shift: [50, -100]
@@ -70,23 +92,24 @@ points:
       key.tags: switch
       anchor:
         ref: matrix_index_bottom
-        shift: [0, -ky]
+        shift: [5, -ky - 3]
+        rotate: -5
       columns:
-        mod2:
-          key.column_net: COL2
-        layer:
+        inner:
+          key:
+            key_net: P7
+        home:
           key:
             shift: [1.1, -5]
             rotate: -10
-          key.column_net: COL3
-        space:
+            key_net: P8
+        outer:
           key:
             rotate: 67
             shift: [1, -14]
-          key.column_net: COL4
+            key_net: P9
       rows:
         cluster:
-          row_net: ROW4
     mounting_left:
       key:
         width: 2
@@ -121,7 +144,7 @@ points:
         height: 2
         tags: mount
       anchor:
-        ref: thumbs_space_cluster
+        ref: thumbs_outer_cluster
         shift: [kx/2 + 2, ky/2 - 2]
       columns:
         c1:
@@ -129,7 +152,7 @@ points:
         r1:
   mirror:
     ref: matrix_middle_bottom
-    distance: mirror_distance
+    distance: 10U
 outlines:
   keys:
     - what: rectangle
@@ -137,16 +160,32 @@ outlines:
       size: [kx-1, ky-1]
   _top_arch_circle_left:
     - what: circle
-      radius: arch_top_radius
+      radius: 95
       where:
-        ref: matrix_middle_bottom
-        shift: [arch_top_x, arch_top_y]
+        ref:
+          aggregate.parts:
+            - ref: matrix_pinky_top
+              orient: 0
+              shift: [-kx/2, ky/2]
+            - ref: matrix_inner_top
+              orient: 0
+              shift: [kx/2, ky/2]
+          orient:
+            ref: matrix_pinky_top
+            shift: [-kx/2, ky/2]
+        orient: 90
+        shift: [0, 83]
   _bottom_arch_circle_left:
     - what: circle
       radius: arch_bottom_radius
       where:
-        ref: matrix_middle_bottom
-        shift: [arch_bottom_x, arch_bottom_y]
+        ref:
+          aggregate.parts:
+            - matrix_pinky_bottom
+            - thumbs_outer_cluster
+          orient: matrix_pinky_bottom
+        orient: 90
+        shift: [0, 308]
   _left_arch_circle_left:
     - what: circle
       radius: arch_left_radius
@@ -275,13 +314,13 @@ pcbs:
         outline: board_pcb_left
     footprints:
       switch:
-        what: mx
+        what: choc
         where: [[-/^mirror_.*/, switch]]
         adjust:
           rotate: 180
         params:
-          from: "{{colrow}}"
-          to: "{{column_net}}"
+          from: "{{key_net}}"
+          to: GND
           hotswap: true
           keycaps: true
       promicro:
@@ -292,21 +331,6 @@ pcbs:
           rotate: -90
         params:
           orientation: down
-          P20: VCC # Left side indicator
-          P21: ROW0
-          P19: ROW1
-          P6:  ROW2
-          P7:  ROW3
-          P8:  ROW4
-          P9:  COL0
-          P18: COL1
-          P15: COL2
-          P14: COL3
-          P16: COL4
-          P10: COL5
-          P5:  ENC1_A
-          P4:  ENC1_B
-          P0:  DATA
       trrs:
         what: trrs
         where:
@@ -377,13 +401,13 @@ pcbs:
         outline: board_pcb_right
     footprints:
       switch:
-        what: mx
+        what: choc
         where: [[/^mirror_.*/, switch]]
         adjust:
           rotate: 180
         params:
-          from: "{{colrow}}"
-          to: "{{column_net}}"
+          from: "{{key_net}}"
+          to: GND
           hotswap: true
           keycaps: true
       promicro:
@@ -394,21 +418,6 @@ pcbs:
           rotate: 90
         params:
           orientation: down
-          P20: GND # Right side indicator
-          P3:  ROW0
-          P4:  ROW1
-          P14: ROW2
-          P16: ROW3
-          P10: ROW4
-          P2:  COL0
-          P5:  COL1
-          P6:  COL2
-          P7:  COL3
-          P8:  COL4
-          P9:  COL5
-          P18: ENC1_A
-          P19: ENC1_B
-          P0:  DATA
       trrs:
         what: trrs
         where:
