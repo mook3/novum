@@ -11,7 +11,7 @@ units:
   ky: cy
   px: kx + 2
   py: ky + 2
-  index_stagger: -4.5
+  index_stagger: -8.7
   arch_top_x: 0
   arch_top_y: -65
   arch_top_radius: 110
@@ -44,13 +44,13 @@ points:
         pinky:
           rows:
             bottom:
-              key_net: P6
+              key_net: P6 
             home:
               key_net: P5
             top:
               key_net: P4
         ring:
-          key.stagger: 9
+          key.stagger: 13
           rows:
             bottom:
               key_net: P3
@@ -59,7 +59,7 @@ points:
             top:
               key_net: P0
         middle:
-          key.stagger: 2.5
+          key.stagger: 6.7
           rows:
             bottom:
               key_net: P1
@@ -91,22 +91,26 @@ points:
     thumbs:
       key.tags: switch
       anchor:
-        ref: matrix_index_bottom
-        shift: [5, -ky - 3]
-        rotate: -5
+        ref:
+          ref: matrix_inner_bottom
+          shift: [-kx/2, -ky/2]
+          rotate: -10
+        shift: [-2, -ky/2]
       columns:
         inner:
           key:
             key_net: P7
         home:
           key:
-            shift: [1.1, -5]
-            rotate: -10
+            # hinge at bottom-left corner of key
+            origin: [-kx/2, -ky/2]
+            splay: -8
             key_net: P8
         outer:
           key:
-            rotate: 67
-            shift: [1, -14]
+            # hinge at bottom-left corner of key
+            origin: [-kx/2, -ky/2]
+            splay: -8
             key_net: P9
       rows:
         cluster:
@@ -160,7 +164,7 @@ outlines:
       size: [kx-1, ky-1]
   _top_arch_circle_left:
     - what: circle
-      radius: 95
+      radius: 70
       where:
         ref:
           aggregate.parts:
@@ -174,18 +178,22 @@ outlines:
             ref: matrix_pinky_top
             shift: [-kx/2, ky/2]
         orient: 90
-        shift: [0, 83]
+        shift: [0, 52]
   _bottom_arch_circle_left:
     - what: circle
       radius: arch_bottom_radius
       where:
         ref:
           aggregate.parts:
-            - matrix_pinky_bottom
-            - thumbs_outer_cluster
-          orient: matrix_pinky_bottom
+            - ref: matrix_pinky_bottom
+              shift: [-kx/2, -ky/2]
+            - ref: thumbs_outer_cluster
+              shift: [kx/2, -ky/2]
+          orient:
+            ref: matrix_pinky_bottom
+            shift: [-kx/2, -ky/2]
         orient: 90
-        shift: [0, 308]
+        shift: [0, 297]
   _left_arch_circle_left:
     - what: circle
       radius: arch_left_radius
@@ -531,19 +539,6 @@ pcbs:
           side: B
           width: 8.5kx
           height: 6.5ky
-  bottom_board_with_art:
-    template: kicad8
-    outlines:
-      main:
-        outline: board_outline_left
-    footprints:
-      mounting:
-        what: mounting_hole_npth
-        where: [[-/^mirror_.*/, mount]]
-        params.hole_size: mounting_hole_diameter
-        params.hole_drill: mounting_hole_diameter
-      art:
-        what: artwork
   bottom_board_with_tenting_puck:
     template: kicad8
     outlines:
